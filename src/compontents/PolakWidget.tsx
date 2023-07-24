@@ -61,6 +61,8 @@ export default function PolakWidget() {
   const tekscikRef = useRef<HTMLImageElement>(null);
   const mariuszRef = useRef<HTMLImageElement>(null);
 
+  const daveRef = useRef<HTMLAudioElement>(null);
+
   const papsonRef = useRef<HTMLSpanElement>(null);
 
   const [papiezKopter] = useState<PapiezKopter>(new PapiezKopter());
@@ -327,6 +329,7 @@ export default function PolakWidget() {
         cx.clearRect(0, 0, windowSize.height, windowSize.width);
       }
 
+      daveRef.current?.pause();
       const style = tekscikRef.current?.style;
       if (style) style.display = "none";
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
@@ -397,6 +400,9 @@ export default function PolakWidget() {
 
           init: 0,
         };
+        daveRef.current?.pause();
+        daveRef.current?.load();
+        daveRef.current?.play();
         lotNarodowy(
           duxpo.data.kicia.includes(`sypukcji w prezencie`) ||
             duxpo.data.kicia.includes(`dzięki za sypukcje`),
@@ -421,6 +427,8 @@ export default function PolakWidget() {
         position: "relative",
       }}
     >
+      {/* @ts-expect-error type is not on audio element in typedef but is required */}
+      <audio ref={daveRef} type="audio/mpeg" src="polskahehe.mp3" />
       <p
         style={{
           position: "absolute",
