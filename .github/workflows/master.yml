@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: 20.4.0
       - name: Install dependencies
-        run: npm run ci
+        run: npm ci
       - name: Build
         run: npm run build
       - name: Build, tag, and push image to Docker Hub
