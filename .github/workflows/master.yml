@@ -19,6 +19,6 @@ jobs:
       - name: Build, tag, and push image to Docker Hub
         id: build-image
         run: |
-          docker login -u ${{  secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }} docker.knur.club
+          docker login -u=${{  secrets.DOCKER_LOGIN }} -p=${{ secrets.DOCKER_PASSWORD }} -e=me@falat=me docker.knur.club
           docker build -t docker.knur.club/froncik:latest .
           docker push docker.knur.club/froncik:latest
