@@ -1,7 +1,7 @@
 import { PolskiAsset } from "../interfaces/PolskiAsset";
 import { WielkiPolak } from "../interfaces/WielkiPolak";
 
-export class GenerycznyWielkiPolak implements WielkiPolak {
+export abstract class GenerycznyWielkiPolak implements WielkiPolak {
   protected ANIMATION_FRAMES = 5;
   protected ANIMATION_SPEED = 0.005;
   protected ANIMATION_ACCELERATION = 0.000008;
@@ -16,6 +16,7 @@ export class GenerycznyWielkiPolak implements WielkiPolak {
 
   onAssetLoaded(id: string, asset: HTMLImageElement): void {
     this.assets[id] = asset;
+    console.log(id, asset);
     this.reset();
   }
 
@@ -49,9 +50,7 @@ export class GenerycznyWielkiPolak implements WielkiPolak {
     return this.ANIMATION_FRAMES;
   }
 
-  public onUpdate(deltaTime: number): void {
-    alert("nie uzywaj tak tej klasy debil " + deltaTime);
-  }
+  public abstract onUpdate(deltaTime: number): void;
 
   public onDraw(context: CanvasRenderingContext2D) {
     if (this.currentImage !== null) {
@@ -65,7 +64,5 @@ export class GenerycznyWielkiPolak implements WielkiPolak {
     }
   }
 
-  public reset() {
-    this.animationSpeed = 0;
-  }
+  public abstract reset(): void;
 }

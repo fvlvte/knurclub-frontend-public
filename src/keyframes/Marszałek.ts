@@ -9,6 +9,9 @@ enum StanyMarszałka {
 }
 
 export class Marszałek extends GenerycznyWielkiPolak {
+  protected readonly SCALE_X: number = 0.666 * 0.666;
+  protected readonly SCALE_Y: number = 0.666 * 0.666;
+
   constructor() {
     super();
   }
@@ -57,6 +60,7 @@ export class Marszałek extends GenerycznyWielkiPolak {
 
   public reset() {
     this.currentImage = this.assets["marshall"];
+    console.log(this.assets["marshall"]);
     this.x =
       (window.innerWidth - this.currentImage.width * this.SCALE_X) *
       Math.random();
