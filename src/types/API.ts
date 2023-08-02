@@ -13,6 +13,7 @@ export enum Entitsy {
   MAŁYSZ = "MAŁYSZ",
   KUBICA = "KUBICA",
   TESTO = "TESTO",
+  MARIUSZ = "MARIUSZ",
   PREZENTKONON = "PREZENTKONON",
 }
 

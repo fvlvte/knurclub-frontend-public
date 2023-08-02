@@ -1,4 +1,4 @@
-import { GenerycznyWielkiPolak } from "../compontents/GenerycznyWielkiPolak";
+import { GenerycznyWielkiPolak } from "./GenerycznyWielkiPolak";
 import { PolskiAsset } from "../interfaces/PolskiAsset";
 
 enum StanyMarszałka {
@@ -12,11 +12,11 @@ export class Marszałek extends GenerycznyWielkiPolak {
   protected readonly SCALE_X: number = 0.666 * 0.666;
   protected readonly SCALE_Y: number = 0.666 * 0.666;
 
+  private state: StanyMarszałka = StanyMarszałka.WJAZD;
+
   constructor() {
     super();
   }
-
-  private state: StanyMarszałka = StanyMarszałka.WJAZD;
 
   public getAssetList(): PolskiAsset[] {
     return [{ id: "marshall", path: "assets/marszalek.png" }];

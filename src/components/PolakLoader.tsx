@@ -2,6 +2,7 @@ import { WielkiPolak } from "../interfaces/WielkiPolak";
 
 interface PolakLoaderProps {
   polak: WielkiPolak;
+  onNewAssetLoaded: () => void;
 }
 
 export default function PolakLoader(props: PolakLoaderProps) {
@@ -13,6 +14,7 @@ export default function PolakLoader(props: PolakLoaderProps) {
         `${props.polak.getName()}_${id}`,
       ) as HTMLImageElement,
     );
+    props.onNewAssetLoaded();
   };
 
   return (

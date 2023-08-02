@@ -1,4 +1,5 @@
-import { GenerycznyWielkiPolak } from "../compontents/GenerycznyWielkiPolak";
+import { GenerycznyWielkiPolak } from "./GenerycznyWielkiPolak";
+import { PolskiAsset } from "../interfaces/PolskiAsset";
 
 export class PapiezKopter extends GenerycznyWielkiPolak {
   private PAPIESH_DRAG_MOMENTUM = 0.05;
@@ -9,6 +10,17 @@ export class PapiezKopter extends GenerycznyWielkiPolak {
     this.ANIMATION_SPEED = 0.005;
     this.ANIMATION_ACCELERATION = 0.000008;
     this.ANIMATION_FRAME_MULTIPILER = 10;
+  }
+
+  public getAssetList(): PolskiAsset[] {
+    const assetList: PolskiAsset[] = [];
+    for (let i = 0; i < this.ANIMATION_FRAMES; i++) {
+      assetList.push({
+        id: `bigPoppa${i}`,
+        path: `assets/PAPAJ/papiez${i}.png`,
+      });
+    }
+    return assetList;
   }
 
   public onUpdate(deltaTime: number) {
@@ -23,14 +35,20 @@ export class PapiezKopter extends GenerycznyWielkiPolak {
     if (this.animationFrame > this.ANIMATION_FRAMES) {
       this.animationFrame = 0;
     }
+
+    this.currentImage =
+      this.assets[`bigPoppa${Math.floor(this.animationFrame)}`];
   }
 
   public reset() {
-    const papajskiFrejm = this.refyPapiezowe[Math.floor(this.animationFrame)];
+    const papajskiFrejm =
+      this.assets[`bigPoppa${Math.floor(this.animationFrame)}`];
 
-    this.y = window.innerHeight - papajskiFrejm.height;
-    this.x = window.innerWidth / 2 - papajskiFrejm.width / 2;
-    this.animationSpeed = this.ANIMATION_SPEED;
-    this.animationFrame = 0;
+    if (typeof papajskiFrejm !== "undefined") {
+      this.y = window.innerHeight - papajskiFrejm.height;
+      this.x = window.innerWidth / 2 - papajskiFrejm.width / 2;
+      this.animationSpeed = this.ANIMATION_SPEED;
+      this.animationFrame = 0;
+    }
   }
 }

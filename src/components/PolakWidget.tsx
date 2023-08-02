@@ -1,11 +1,27 @@
 import { useEffect, useRef, useState } from "react";
 
 import { useWindowSize } from "../hooks/useWindowSize";
-import { GenerycznyWielkiPolak } from "./GenerycznyWielkiPolak";
+import { GenerycznyWielkiPolak } from "../keyframes/GenerycznyWielkiPolak";
 import { Marszałek } from "../keyframes/Marszałek";
 import AgregatPolaków from "./AgregatPolaków";
 import { default as axios } from "axios";
 import { AlertInfo, Entitsy } from "../types/API";
+import { PapiezKopter } from "../keyframes/PapiezKopter";
+import { GiftedKonon } from "../keyframes/GiftedKonon";
+import { Robercik } from "../keyframes/Robercik";
+import { OrzełPolski } from "../keyframes/OrzełPolski";
+import { Testo } from "../keyframes/Testo";
+import { Pudzian } from "../keyframes/Pudzian";
+
+const ZebranieNarodowe: Record<string, GenerycznyWielkiPolak> = {
+  [Entitsy.MARSHALL]: new Marszałek(),
+  [Entitsy.PREZENTKONON]: new GiftedKonon(),
+  [Entitsy.KUBICA]: new Robercik(),
+  [Entitsy.MAŁYSZ]: new OrzełPolski(),
+  [Entitsy.TESTO]: new Testo(),
+  [Entitsy.MARIUSZ]: new Pudzian(),
+  [Entitsy.PAPIEŻKOPTER]: new PapiezKopter(),
+};
 
 let Time = new Date().getTime();
 
@@ -19,14 +35,12 @@ export default function PolakWidget() {
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const [ZebranieNarodowe] = useState<Record<string, GenerycznyWielkiPolak>>({
-    [Entitsy.MARSHALL]: new Marszałek(),
-  });
-
   const [tekscikAlerta, setTekscikAlerta] = useState("");
   const [renderState, setRenderState] = useState(Alerciaki.NIE_MA_ALERTA_XD);
   const [alertDuration, setAlertDuration] = useState(0);
   const [alertStart, setAlertStart] = useState(0);
+  const daveRef = useRef<HTMLAudioElement>(null);
+
   const [entitsy, setEntitsy] = useState<Entitsy[]>([]);
 
   const UpdateChain = () => {
@@ -72,6 +86,17 @@ export default function PolakWidget() {
       requestAnimationFrame(onUpdate);
   };
 
+  const onNewAssetLoaded = () => {
+    for (const key in ZebranieNarodowe) {
+      if (ZebranieNarodowe[key].isLoaded() === false) {
+        return;
+      }
+    }
+
+    setTekscikAlerta("");
+    UpdateChain();
+  };
+
   const renderController = () => {
     onUpdate();
   };
@@ -81,6 +106,8 @@ export default function PolakWidget() {
       for (const key in ZebranieNarodowe) {
         ZebranieNarodowe[key].reset();
       }
+      daveRef.current?.load();
+      daveRef.current?.play();
       Time = new Date().getTime();
       requestAnimationFrame(renderController);
     } else if (renderState === Alerciaki.NIE_MA_ALERTA_XD) {
@@ -89,11 +116,13 @@ export default function PolakWidget() {
   }, [renderState]);
 
   useEffect(() => {
-    UpdateChain();
+    setTekscikAlerta("ŁADUJE ALERTY UWU OWO MEOW");
   }, []);
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%" }}>
+      {/* @ts-expect-error type is not on audio element in typedef but is required */}
+      <audio ref={daveRef} type="audio/mpeg" src="polskahehe.mp3" />
       <h1
         style={{
           position: "absolute",
@@ -117,7 +146,10 @@ export default function PolakWidget() {
         width={windowSize.width}
         height={windowSize.height}
       />
-      <AgregatPolaków polaki={ZebranieNarodowe} />
+      <AgregatPolaków
+        onNewAssetLoaded={onNewAssetLoaded}
+        polaki={ZebranieNarodowe}
+      />
     </div>
   );
 }

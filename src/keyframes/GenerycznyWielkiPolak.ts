@@ -14,6 +14,17 @@ export abstract class GenerycznyWielkiPolak implements WielkiPolak {
 
   protected assets: { [id: string]: HTMLImageElement } = {};
 
+  public isLoaded(): boolean {
+    const assetList = this.getAssetList();
+    for (const asset of assetList) {
+      if (typeof this.assets[asset.id] === "undefined") {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   onAssetLoaded(id: string, asset: HTMLImageElement): void {
     this.assets[id] = asset;
     console.log(id, asset);
