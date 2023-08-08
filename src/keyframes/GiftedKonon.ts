@@ -36,9 +36,11 @@ export class GiftedKonon extends GenerycznyWielkiPolak {
   public reset() {
     this.currentImage = this.assets[`konon${Math.floor(this.animationFrame)}`];
 
-    this.y = 50;
-    this.x = window.innerWidth / 2 - this.currentImage.width / 2;
-    this.animationSpeed = this.ANIMATION_SPEED;
-    this.animationFrame = 0;
+    if (typeof this.currentImage !== "undefined") {
+      this.y = 50;
+      this.x = window.innerWidth / 2 - this.currentImage.width / 2;
+      this.animationSpeed = this.ANIMATION_SPEED;
+      this.animationFrame = 0;
+    }
   }
 }

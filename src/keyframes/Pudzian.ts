@@ -53,9 +53,11 @@ export class Pudzian extends GenerycznyWielkiPolak {
   public reset() {
     this.currentImage = this.assets[this.constructor.name];
 
-    this.x = -1 * (this.currentImage.width * this.SCALE_X);
-    this.y = window.innerHeight - this.currentImage.height * this.SCALE_Y;
-    this.animationSpeed = 0.5;
-    this.state = StanyPudziana.WJAZD;
+    if (typeof this.currentImage !== "undefined") {
+      this.x = -1 * (this.currentImage.width * this.SCALE_X);
+      this.y = window.innerHeight - this.currentImage.height * this.SCALE_Y;
+      this.animationSpeed = 0.5;
+      this.state = StanyPudziana.WJAZD;
+    }
   }
 }
