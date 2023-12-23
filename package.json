@@ -25,8 +25,10 @@
     "web-vitals": "3.4.0"
   },
   "scripts": {
+    "lint": "eslint --ext .ts src --fix",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-local": "PUBLIC_URL=\"http://localhost/widget\" react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

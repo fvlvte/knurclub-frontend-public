@@ -64,7 +64,10 @@ export abstract class GenerycznyWielkiPolak implements WielkiPolak {
   public abstract onUpdate(deltaTime: number): void;
 
   public onDraw(context: CanvasRenderingContext2D) {
-    if (this.currentImage !== null) {
+    if (
+      typeof this.currentImage !== "undefined" &&
+      this.currentImage !== null
+    ) {
       context.drawImage(
         this.currentImage,
         this.x,

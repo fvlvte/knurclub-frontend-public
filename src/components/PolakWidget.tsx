@@ -12,6 +12,10 @@ import { Robercik } from "../keyframes/Robercik";
 import { OrzełPolski } from "../keyframes/OrzełPolski";
 import { Testo } from "../keyframes/Testo";
 import { Pudzian } from "../keyframes/Pudzian";
+import { KoloKnurskie } from "./KoloKnurskie";
+import { TTSComponent } from "./TTSComponent";
+import { Premier } from "../keyframes/Premier";
+import { Zonk } from "../keyframes/Zonk";
 
 const ZebranieNarodowe: Record<string, GenerycznyWielkiPolak> = {
   [Entitsy.MARSHALL]: new Marszałek(),
@@ -20,6 +24,8 @@ const ZebranieNarodowe: Record<string, GenerycznyWielkiPolak> = {
   [Entitsy.MAŁYSZ]: new OrzełPolski(),
   [Entitsy.TESTO]: new Testo(),
   [Entitsy.MARIUSZ]: new Pudzian(),
+  [Entitsy.PREMIER]: new Premier(),
+  [Entitsy.ZONK]: new Zonk(),
   [Entitsy.PAPIEŻKOPTER]: new PapiezKopter(),
 };
 
@@ -39,13 +45,14 @@ export default function PolakWidget() {
   const [renderState, setRenderState] = useState(Alerciaki.NIE_MA_ALERTA_XD);
   const [alertDuration, setAlertDuration] = useState(0);
   const [alertStart, setAlertStart] = useState(0);
+  const [showWheel, setShowWheel] = useState(false);
   const daveRef = useRef<HTMLAudioElement>(null);
 
   const [entitsy, setEntitsy] = useState<Entitsy[]>([]);
 
   const UpdateChain = () => {
     axios
-      .get<{ event: AlertInfo | null }>(`http://localhost/twitch/v2/event`)
+      .get<{ event: AlertInfo | null }>(`http://localhost:80/twitch/v2/event`)
       .then((r) => {
         if (r.data.event !== null) {
           setAlertStart(new Date().getTime());
@@ -53,6 +60,7 @@ export default function PolakWidget() {
           setTekscikAlerta(r.data.event.innerHtml);
           setAlertDuration(r.data.event.duration);
           setEntitsy(r.data.event.entities);
+          setShowWheel(true);
         } else {
           setTimeout(UpdateChain, 1000);
         }
@@ -81,6 +89,7 @@ export default function PolakWidget() {
     if (new Date().getTime() - alertStart > alertDuration) {
       setRenderState(Alerciaki.NIE_MA_ALERTA_XD);
       setTekscikAlerta("");
+      setShowWheel(false);
       ctx?.clearRect(0, 0, windowSize.width, windowSize.height);
     } else if (renderState === Alerciaki.ALERT_O_KURWA)
       requestAnimationFrame(onUpdate);
@@ -120,7 +129,8 @@ export default function PolakWidget() {
   }, []);
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100%" }}>
+    <center style={{ position: "relative", width: "100%", height: "100%" }}>
+      <TTSComponent text={"für deutschland"} />
       {/* @ts-expect-error type is not on audio element in typedef but is required */}
       <audio ref={daveRef} type="audio/mpeg" src="polskahehe.mp3" />
       <h1
@@ -137,6 +147,8 @@ export default function PolakWidget() {
       >
         {tekscikAlerta}
       </h1>
+      <center>{/*<KoloKnurskie></KoloKnurskie>*/ null}</center>
+
       <canvas
         ref={canvasRef}
         style={{
@@ -150,6 +162,19 @@ export default function PolakWidget() {
         onNewAssetLoaded={onNewAssetLoaded}
         polaki={ZebranieNarodowe}
       />
-    </div>
+      {1 !== 1 && showWheel && (
+        <div
+          style={{
+            position: "absolute",
+            width: "600px",
+            height: "600px",
+            bottom: 0,
+            right: 0,
+          }}
+        >
+          <KoloKnurskie></KoloKnurskie>
+        </div>
+      )}
+    </center>
   );
 }

@@ -1,7 +1,9 @@
+import { KoloKnurskie } from "./components/KoloKnurskie";
 import { OAuthHandler } from "./components/OAuthHandler";
 import PolakWidget from "./components/PolakWidget";
 import { PołonczKonto } from "./components/PołonczKonto";
 import { useNavigation } from "./hooks/useNavigation";
+import TournamentView from "./TournamentView";
 
 export const App: React.FC = () => {
   const [path] = useNavigation();
@@ -10,6 +12,10 @@ export const App: React.FC = () => {
     return <PołonczKonto />;
   } else if (path.includes("/oauth-handler")) {
     return <OAuthHandler />;
+  } else if (path.includes("/kolo-test")) {
+    return <KoloKnurskie />;
+  } else if (path.includes("/tournament")) {
+    return <TournamentView />;
   } else {
     return <PolakWidget />;
   }

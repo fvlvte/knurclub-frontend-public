@@ -15,6 +15,8 @@ export enum Entitsy {
   TESTO = "TESTO",
   MARIUSZ = "MARIUSZ",
   PREZENTKONON = "PREZENTKONON",
+  PREMIER = "PREMIER",
+  ZONK = "ZONK",
 }
 
 export type AlertInfo = {
