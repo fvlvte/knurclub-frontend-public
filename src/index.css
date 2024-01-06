@@ -11,3 +11,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+p {
+  font-size: calc(69px * 1.5 / 2);
+  color: white;
+  text-shadow:
+          0.07em 0 black,
+          0 0.07em black,
+          -0.07em 0 black,
+          0 -0.07em black;
+}
+
+h1 {
+  font-size: calc(69px * 1.2);
+  color: white;
+  text-shadow:
+          0.07em 0 black,
+          0 0.07em black,
+          -0.07em 0 black,
+          0 -0.07em black;
+}
+
+.opacitedxD {
+    opacity: 0.5;
+}

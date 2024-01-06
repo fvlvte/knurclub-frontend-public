@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import "./KoloKnurskie.css";
+//import "./KoloKnurskie.css";
 
 export const KoloKnurskie: React.FC = () => {
   useEffect(() => {
