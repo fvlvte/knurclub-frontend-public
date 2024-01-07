@@ -6,6 +6,8 @@ type SongInfo = {
   title: string;
   requestedBy: string;
   coverImage: string;
+  userReputation: number;
+  url: string;
 };
 
 const convertToDuration = (seconds: number) => {
@@ -24,6 +26,7 @@ export const SR: FC = () => {
   const h1Ref = useRef<HTMLHeadingElement>(null);
 
   const BOZY_DELAY = 2137;
+
   const initPlayback = async () => {
     try {
       const response = await axios.get("http://localhost/api/songrequest");
@@ -103,6 +106,21 @@ export const SR: FC = () => {
     };
   }, [song]);
 
+  useEffect(() => {
+    const i = window.setInterval(async () => {
+      try {
+        const response = await axios.get("http://localhost/api/sr/skip");
+        if (response.data.skip) {
+          playerRef.current?.pause();
+          initPlayback();
+        }
+      } catch (e_) {
+        console.error(e_);
+      }
+    }, 2000);
+    return () => window.clearInterval(i);
+  }, []);
+
   return (
     <div
       style={{
@@ -144,7 +162,9 @@ export const SR: FC = () => {
             {song && "/"}
             {song && convertToDuration(duration)}
           </p>
-          <p>{song?.requestedBy}</p>
+          <p>
+            {song?.requestedBy} ({song?.userReputation})
+          </p>
         </div>
       </div>
       <audio ref={playerRef}></audio>
