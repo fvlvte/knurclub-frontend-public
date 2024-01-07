@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { type FC, useEffect, useRef, useState } from "react";
 import { default as axios } from "axios";
 
 type SongInfo = {
@@ -14,7 +14,7 @@ const convertToDuration = (seconds: number) => {
     secondsPart.length === 1 ? "0" + secondsPart : secondsPart
   }`;
 };
-export const Songrequest: React.FC = () => {
+export const SR: FC = () => {
   const [song, setSong] = useState<SongInfo | null>(null);
   const [timeInfo, setTimeInfo] = useState<number>(0); // [currentTime, duration
   const [duration, setDuration] = useState<number>(0); // [currentTime, duration
@@ -113,6 +113,7 @@ export const Songrequest: React.FC = () => {
     >
       <div>
         <img
+          alt={"dupa"}
           ref={imageRef}
           style={{ width: "100%", height: "100%" }}
           src={song?.coverImage}

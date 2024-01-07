@@ -1,4 +1,4 @@
-export const PołonczKonto: React.FC = () => {
+export const PolonczKonto: React.FC = () => {
   const KLIENT_ID = "z4ngv8hovfeaq7rstf7egijqn351wu";
   const REDIRECT_URL = "http://localhost:3000/oauth-flow";
   const szkopy = [
