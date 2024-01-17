@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js 20.5.0
+      - name: Use Node.js 20.11.0
         uses: actions/setup-node@v3
         with:
-          node-version: 20.5.0
+          node-version: 20.11.0
       - name: Install dependencies
         run: npm ci
       - name: Build
@@ -20,5 +20,5 @@ jobs:
         id: build-image
         run: |
           docker login -u nginx -p ${{ secrets.DOCKER_PASSWORD }} docker.knur.club
-          docker build -t docker.knur.club/froncik:latest .
-          docker push docker.knur.club/froncik:latest
+          docker build -t docker.knur.club/frontend:latest .
+          docker push docker.knur.club/frontend:latest
