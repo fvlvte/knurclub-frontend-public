@@ -41,7 +41,7 @@ const questions = [
     question: "How can you import static image in React Native?",
     category: "Core components",
     answers: [
-      "<img src={require('./my-image.png')} />",
+      "<img alt='xd' src={require('./my-image.png')} />",
       "<Image source={url('./my-image.png')} />",
       "<Image src={'./my-image.png'} />",
       "<Image source={require('./my-image.png')} />",
@@ -440,7 +440,7 @@ export default function TournamentView() {
 
   const [question, setQuestion] = useState<string>(questions[0].question);
 
-  const [category, setCategory] = useState<string>(questions[0].category);
+  //const [category, setCategory] = useState<string>(questions[0].category);
 
   const [answers, setAnswers] = useState<string[]>(questions[0].answers);
   const [correctAnswer, setCorrectAnswer] = useState<string>(
@@ -467,7 +467,7 @@ export default function TournamentView() {
       const newIdx = prev + 1;
 
       setAnswers(questions[newIdx].answers);
-      setCategory(questions[newIdx].category);
+      //setCategory(questions[newIdx].category);
       setRenderState(1);
       setCorrectAnswer(
         questions[newIdx].answers[questions[newIdx].correctAnswerIndex],

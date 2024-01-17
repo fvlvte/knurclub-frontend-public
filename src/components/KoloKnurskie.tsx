@@ -2,10 +2,16 @@ import React, { useEffect } from "react";
 
 //import "./KoloKnurskie.css";
 
+type Sector = {
+  color: string;
+  label: string;
+  odds?: number;
+};
+
 export const KoloKnurskie: React.FC = () => {
   useEffect(() => {
     setTimeout(() => {
-      const sectors = [
+      const sectors: Sector[] = [
         { color: "#f82", label: "C", odds: 20 },
         { color: "#0bf", label: "JS/TS" },
         { color: "#fb0", label: "PYTHON" },
@@ -15,9 +21,9 @@ export const KoloKnurskie: React.FC = () => {
         { color: "#bf0", label: "PHP" },
       ];
 
-      const rand = (m: any, M: any) => Math.random() * (M - m) + m;
+      const rand = (m: number, M: number) => Math.random() * (M - m) + m;
       const tot = sectors.length;
-      const spinEl = document.querySelector("#spin");
+      //const spinEl = document.querySelector("#spin");
       const ctx = (
         document.querySelector("#wheel") as HTMLCanvasElement
       ).getContext("2d");
@@ -34,7 +40,7 @@ export const KoloKnurskie: React.FC = () => {
 
       const getIndex = () => Math.floor(tot - (ang / TAU) * tot) % tot;
 
-      function drawSector(sector: any, i: any) {
+      function drawSector(sector: Sector, i: number) {
         if (!ctx) return;
         const xang = arc * i;
 
@@ -61,7 +67,7 @@ export const KoloKnurskie: React.FC = () => {
       function rotate() {
         if (angVel < 0.002) return;
 
-        const sector = sectors[getIndex()];
+        //const sector = sectors[getIndex()];
         if (!ctx) return;
         ctx.canvas.style.transform = `rotate(${ang - PI / 2}rad)`;
       }
