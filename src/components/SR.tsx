@@ -23,6 +23,7 @@ export const SR: FC = () => {
 
   const imageRef = useRef<HTMLImageElement>(null);
   const playerRef = useRef<HTMLAudioElement>(null);
+  const alertPlayerRef = useRef<HTMLAudioElement>(null);
   const h1Ref = useRef<HTMLHeadingElement>(null);
 
   const BOZY_DELAY = 2137;
@@ -51,6 +52,7 @@ export const SR: FC = () => {
             setTimeInfo(playerRef.current?.currentTime ?? 0);
             setDuration(playerRef.current?.duration ?? 0);
           };
+          playerRef.current.volume = 0.1;
           playerRef.current.play();
         }
       } else if (response.status === 204) {
@@ -67,11 +69,38 @@ export const SR: FC = () => {
     }
   };
 
+  const initAlertPlayback = async () => {
+    try {
+      const response = await axios.get("http://localhost/api/soundalert");
+
+      if (response.status === 200) {
+        if (alertPlayerRef.current) {
+          alertPlayerRef.current.onended = () => {
+            initAlertPlayback();
+          };
+
+          alertPlayerRef.current.src = `data:audio/mp3;base64,${response.data.mediaBase64}`;
+          alertPlayerRef.current.volume = 1;
+          alertPlayerRef.current.play();
+        }
+      } else if (response.status === 204) {
+        setTimeout(initAlertPlayback, BOZY_DELAY / 2);
+      } else {
+        setTimeout(initAlertPlayback, BOZY_DELAY / 2);
+      }
+    } catch (e) {
+      setTimeout(initAlertPlayback, BOZY_DELAY / 2);
+    }
+  };
+
   useEffect(() => {
     if (playerRef.current) {
       initPlayback();
     }
-  }, [playerRef]);
+    if (alertPlayerRef.current) {
+      initAlertPlayback();
+    }
+  }, [playerRef, alertPlayerRef]);
 
   useEffect(() => {
     if (!song) return;
@@ -168,6 +197,7 @@ export const SR: FC = () => {
         </div>
       </div>
       <audio ref={playerRef}></audio>
+      <audio ref={alertPlayerRef}></audio>
     </div>
   );
 };
