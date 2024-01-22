@@ -41,6 +41,8 @@ export default function PolakWidget() {
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const [secondsLeft, setSecondsLeft] = useState(0);
+
   const [tekscikAlerta, setTekscikAlerta] = useState("");
   const [renderState, setRenderState] = useState(Alerciaki.NIE_MA_ALERTA_XD);
   const [alertDuration, setAlertDuration] = useState(0);
@@ -126,10 +128,34 @@ export default function PolakWidget() {
 
   useEffect(() => {
     setTekscikAlerta("ŁADUJE ALERTY UWU OWO MEOW");
+    const interval = setInterval(() => {
+      axios
+        .get<{ seconds: number }>(`http://localhost:80/api/timer/tick`)
+        .then((r) => {
+          setSecondsLeft(r.data.seconds);
+        })
+        .catch(() => {
+          setSecondsLeft(0);
+        });
+    }, 1000);
+    return () => clearInterval(interval);
   }, []);
+
+  const secondsToStamp = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds - hours * 3600) / 60);
+    const sp = seconds - hours * 3600 - minutes * 60;
+    if (seconds <= 0) return "";
+    return `${hours > 0 ? hours + ":" : ""}${
+      minutes < 10 ? "0" + minutes : minutes
+    }:${sp < 10 ? "0" + sp : sp}`;
+  };
 
   return (
     <center style={{ position: "relative", width: "100%", height: "100%" }}>
+      <div style={{ position: "absolute", top: "69px", left: "69px" }}>
+        <h1>{secondsToStamp(secondsLeft)}</h1>
+      </div>
       <TTSComponent text={"für deutschland"} />
       {/* @ts-expect-error type is not on audio element in typedef but is required */}
       <audio ref={daveRef} type="audio/mpeg" src="polskahehe.mp3" />
