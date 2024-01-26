@@ -1,21 +1,23 @@
-//import { KoloKnurskie } from "./components/KoloKnurskie";
 import { OAuthHandler } from "./components/OAuthHandler";
 import PolakWidget from "./components/PolakWidget";
 import { PolonczKonto } from "./components/PolonczKonto";
 import { useNavigation } from "./hooks/useNavigation";
 import TournamentView from "./TournamentView";
 import { SR } from "./components/SR";
+import { V2WidgetWrapper } from "./components/V2WidgetWrapper";
 
 export const App: React.FC = () => {
   const [path] = useNavigation();
 
+  console.log(path);
+
   if (path.includes("/login")) {
     return <PolonczKonto />;
-  } else if (path.includes("/oauth-handler")) {
+  } else if (path.includes("/oauth-flow")) {
     return <OAuthHandler />;
-  } /*else if (path.includes("/kolo-test")) {
-    //return <KoloKnurskie />;
-  } */ else if (path.includes("/tournament")) {
+  } else if (path.includes("/v2/widget")) {
+    return <V2WidgetWrapper />;
+  } else if (path.includes("/tournament")) {
     return <TournamentView />;
   } else if (path.includes("/sr")) {
     return <SR />;
