@@ -36,7 +36,9 @@ export const OAuthHandler: React.FC = () => {
       {result === "ERROR" && <h2>SORY GUWNO NIE MASZ DOSTEMPU MISIU</h2>}
       {result !== "ERROR" && result !== null && (
         <h2>
-          Dodaj se BrowserSource do OBS-a source na{" "}
+          SongRequest/SoundAlert: Dodaj se BrowserSource (Width 960 / Height
+          540) i zaznacz opcje Control audio via OBS/Shutdown/Refresh do OBS-a
+          source na{" "}
           <button
             onClick={() => {
               navigator.clipboard.writeText(

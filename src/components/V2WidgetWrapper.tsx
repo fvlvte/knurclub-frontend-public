@@ -1,6 +1,7 @@
 import { default as axios } from "axios";
 import { Config } from "../Config";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { V2SR } from "./V2SR";
 
 export const V2WidgetWrapper: React.FC = () => {
   const u = new URLSearchParams(window.location.search);
@@ -12,21 +13,23 @@ export const V2WidgetWrapper: React.FC = () => {
   useEffect(() => {
     const interval = window.setInterval(() => {
       axios
-        .get(`${backendUrl}/core/keep-alive`)
+        .get(`${backendUrl}/core/keep-alive`, {
+          headers: { "X-Knur-Key": token },
+        })
         .then((d) => {
           console.log(d.data);
         })
         .catch((e) => console.error(e));
-    }, 60000);
+    }, 1000);
     return () => {
       window.clearInterval(interval);
     };
   }, []);
 
   return (
-    <div style={{ textAlign: "center" }}>
+    <>
       {!token && <h2>GOWNO NIE MA TOKENA AOK</h2>}
-      {token && <h2>TOKEN ZAŁADOWANY W DU</h2>}
-    </div>
+      {token && <V2SR token={token} />}
+    </>
   );
 };
