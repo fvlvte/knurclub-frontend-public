@@ -44,7 +44,6 @@ export const PolonczKonto: React.FC = () => {
       <p>
         <input ref={saRef} type={"checkbox"} /> SOUND ALERTS
       </p>
-      <h3>WHITELISTED ZIUTKI: NIKT</h3>
       <button onClick={doTwitchAuth}>POŁONCZ KONTO TWICZ</button>
     </div>
   );

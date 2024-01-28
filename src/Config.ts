@@ -4,13 +4,17 @@ export class Config {
   }
 
   public static getNewBackendURL(): string {
-    return "http://localhost:21377";
+    return process.env.REACT_APP_BACKEND_URL ?? "http://localhost:21377";
   }
 
   public static getTwitchOAuthRedirectUrl(): string {
-    return "http://localhost:3000/oauth-flow";
+    return `${
+      process.env.REACT_APP_FRONTEND_URL ?? "http://localhost:3000"
+    }/oauth-flow`;
   }
   public static getWidgetWithTokenURL(token: string): string {
-    return `http://localhost:3000/v2/widget?token=${encodeURIComponent(token)}`;
+    return `${
+      process.env.REACT_APP_FRONTEND_URL ?? "http://localhost:3000"
+    }/v2/widget?token=${encodeURIComponent(token)}`;
   }
 }

@@ -5,6 +5,8 @@ jobs:
   build:
     env:
       NODE_ENV: production
+      REACT_APP_BACKEND_URL: "https://api.knur.club"
+      REACT_APP_FRONTEND_URL: "https://mamm0n.knur.club"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
