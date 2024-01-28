@@ -3,10 +3,11 @@ import {
   Features,
   TwitchHelixScopeHelper,
 } from "../util/TwitchHelixScopeHelper";
+import { Config } from "../Config";
 
 export const PolonczKonto: React.FC = () => {
   const KLIENT_ID = "z4ngv8hovfeaq7rstf7egijqn351wu";
-  const REDIRECT_URL = "http://localhost:3000/oauth-flow";
+  const REDIRECT_URL = Config.getTwitchOAuthRedirectUrl();
 
   const fullWypasRef = useRef<HTMLInputElement>(null);
   const srRef = useRef<HTMLInputElement>(null);
