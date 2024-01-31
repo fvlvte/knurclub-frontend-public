@@ -19,6 +19,6 @@ jobs:
       - name: Build, tag, and push image to Docker Hub
         id: build-image
         run: |
-          docker login -u nginx -p ${{ secrets.DOCKER_PASSWORD }} docker.knur.club
-          docker build -t docker.knur.club/frontend:latest .
-          docker push docker.knur.club/frontend:latest
+          docker login -u fvlvte -p ${{ secrets.DOCKER_PASSWORD }}
+          docker build -q -t fvlvte/knurobotfrontend:latest .
+          docker push fvlvte/knurobotfrontend:latest
