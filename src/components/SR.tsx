@@ -139,6 +139,9 @@ export const SR: FC = () => {
     const i = window.setInterval(async () => {
       try {
         const response = await axios.get("http://localhost/api/sr/skip");
+        if (response.data.volume && playerRef.current) {
+          playerRef.current.volume = response.data.volume;
+        }
         if (response.data.skip) {
           playerRef.current?.pause();
           initPlayback();
