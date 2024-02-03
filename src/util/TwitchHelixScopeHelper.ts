@@ -77,11 +77,23 @@ export enum Features {
 
 const FeatureMatrix: Record<Features, TwitchHelixScopes[]> = {
   [Features.ALL]: Object.values(TwitchHelixScopes),
-  [Features.SONG_REQUEST]: [TwitchHelixScopes.UserReadSubscriptions],
+  [Features.SONG_REQUEST]: [
+    TwitchHelixScopes.UserReadSubscriptions,
+    TwitchHelixScopes.ChannelReadSubscriptions,
+    TwitchHelixScopes.ChannelReadGoals,
+    TwitchHelixScopes.ChannelReadHypeTrain,
+    TwitchHelixScopes.ModeratorReadFollowers,
+    TwitchHelixScopes.BitsRead,
+  ],
   [Features.SOUND_ALERTS]: [
     TwitchHelixScopes.UserReadSubscriptions,
     TwitchHelixScopes.ChannelReadRedemptions,
     TwitchHelixScopes.ChannelManageRedemptions,
+    TwitchHelixScopes.ChannelReadSubscriptions,
+    TwitchHelixScopes.ChannelReadGoals,
+    TwitchHelixScopes.ChannelReadHypeTrain,
+    TwitchHelixScopes.ModeratorReadFollowers,
+    TwitchHelixScopes.BitsRead,
   ],
   [Features.EVENT_ALERTS]: [
     TwitchHelixScopes.UserReadSubscriptions,
@@ -89,6 +101,8 @@ const FeatureMatrix: Record<Features, TwitchHelixScopes[]> = {
     TwitchHelixScopes.ChannelReadSubscriptions,
     TwitchHelixScopes.ChannelReadGoals,
     TwitchHelixScopes.ChannelReadHypeTrain,
+    TwitchHelixScopes.ModeratorReadFollowers,
+    TwitchHelixScopes.BitsRead,
   ],
 };
 
