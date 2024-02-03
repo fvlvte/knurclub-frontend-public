@@ -157,6 +157,9 @@ export const V2SR = ({ token }: V2SRProps) => {
           playerRef.current?.pause();
           initPlayback();
         }
+        if (response.data.volume && playerRef.current) {
+          playerRef.current.volume = response.data.volume;
+        }
       } catch (e_) {
         console.error(e_);
       }
