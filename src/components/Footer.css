@@ -1,0 +1,57 @@
+@media (width <= 400px) {
+    .Footer
+    {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+
+        height: 1.2rem;
+        width: 100%;
+
+        background-color: crimson;
+
+        text-align: center;
+    }
+
+    .FooterText
+    {
+        margin: auto auto auto auto;
+
+        font-size: 1rem;
+        color: white;
+        text-shadow:
+                0.07em 0 black,
+                0 0.07em black,
+                -0.07em 0 black,
+                0 -0.07em black;
+    }
+}
+
+@media (width > 400px) {
+    .Footer
+    {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+
+        height: 2rem;
+        width: 100%;
+
+        background-color: crimson;
+
+        text-align: center;
+    }
+
+    .FooterText
+    {
+        margin: auto auto auto auto;
+
+        font-size: 1.69rem;
+        color: white;
+        text-shadow:
+                0.07em 0 black,
+                0 0.07em black,
+                -0.07em 0 black,
+                0 -0.07em black;
+    }
+}

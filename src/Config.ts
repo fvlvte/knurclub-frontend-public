@@ -17,4 +17,11 @@ export class Config {
       process.env.REACT_APP_FRONTEND_URL ?? "http://localhost:3000"
     }/v2/widget?token=${encodeURIComponent(token)}`;
   }
+
+  public static getTwitchAppClientID(): string {
+    return (
+      process.env.REACT_APP_TWITCH_APP_CLIENT_ID ??
+      "z4ngv8hovfeaq7rstf7egijqn351wu"
+    );
+  }
 }

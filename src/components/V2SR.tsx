@@ -43,6 +43,7 @@ export const V2SR = ({ token }: V2SRProps) => {
       });
 
       if (response.status === 200) {
+        console.log(response.data);
         if (playerRef.current) {
           playerRef.current.onended = () => {
             initPlayback();
@@ -75,6 +76,7 @@ export const V2SR = ({ token }: V2SRProps) => {
         setTimeout(initPlayback, BOZY_DELAY / 2);
       }
     } catch (e) {
+      console.error(e);
       setTimeout(initPlayback, BOZY_DELAY / 2);
     }
   };
