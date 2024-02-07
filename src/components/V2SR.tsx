@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { default as axios } from "axios";
 import { Config } from "../Config";
 
+import "./V2SR.css";
+
 type SongInfo = {
   mediaBase64: string;
   title: string;
@@ -205,12 +207,12 @@ export const V2SR = ({ token }: V2SRProps) => {
             </h1>
           </span>
 
-          <p>
+          <p className={"srTimer"}>
             {song && convertToDuration(timeInfo)}
             {song && "/"}
             {song && convertToDuration(duration)}
           </p>
-          <p>
+          <p className={"srTimer"}>
             {song?.requestedBy} ({song?.userReputation})
           </p>
         </div>
