@@ -16,6 +16,7 @@ import { KoloKnurskie } from "./KoloKnurskie";
 import { TTSComponent } from "./TTSComponent";
 import { Premier } from "../keyframes/Premier";
 import { Zonk } from "../keyframes/Zonk";
+import { Config } from "../Config";
 
 const ZebranieNarodowe: Record<string, GenerycznyWielkiPolak> = {
   [Entitsy.MARSHALL]: new Marszałek(),
@@ -52,9 +53,16 @@ export default function PolakWidget() {
 
   const [entitsy, setEntitsy] = useState<Entitsy[]>([]);
 
+  const backendUrl = Config.getNewBackendURL();
+
+  const u = new URLSearchParams(window.location.search);
+  const token = u.get("token");
+
   const UpdateChain = () => {
     axios
-      .get<{ event: AlertInfo | null }>(`http://localhost:80/twitch/v2/event`)
+      .get<{ event: AlertInfo | null }>(`${backendUrl}/v1/event`, {
+        headers: { "X-Knur-Key": token },
+      })
       .then((r) => {
         if (r.data.event !== null) {
           setAlertStart(new Date().getTime());
@@ -130,7 +138,9 @@ export default function PolakWidget() {
     setTekscikAlerta("ŁADUJE ALERTY UWU OWO MEOW");
     const interval = setInterval(() => {
       axios
-        .get<{ seconds: number }>(`http://localhost:80/api/timer/tick`)
+        .get<{ seconds: number }>(`${backendUrl}/v1/timer`, {
+          headers: { "X-Knur-Key": token },
+        })
         .then((r) => {
           setSecondsLeft(r.data.seconds);
         })
