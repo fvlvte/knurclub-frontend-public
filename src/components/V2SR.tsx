@@ -40,6 +40,8 @@ export const V2SR = ({ token }: V2SRProps) => {
 
   const initPlayback = async () => {
     try {
+      if (!playerRef.current?.paused) return;
+
       const response = await axios.get(`${backendUrl}/v1/sr/queue`, {
         headers: { "X-Knur-Key": token },
       });
@@ -85,6 +87,8 @@ export const V2SR = ({ token }: V2SRProps) => {
 
   const initAlertPlayback = async () => {
     try {
+      if (!alertPlayerRef.current?.paused) return;
+
       const response = await axios.get(`${backendUrl}/v1/sa/queue`, {
         headers: { "X-Knur-Key": token },
       });
@@ -99,8 +103,6 @@ export const V2SR = ({ token }: V2SRProps) => {
           alertPlayerRef.current.volume = 1;
           alertPlayerRef.current.play();
         }
-      } else if (response.status === 204) {
-        setTimeout(initAlertPlayback, BOZY_DELAY / 2);
       } else {
         setTimeout(initAlertPlayback, BOZY_DELAY / 2);
       }
@@ -116,7 +118,7 @@ export const V2SR = ({ token }: V2SRProps) => {
     if (alertPlayerRef.current) {
       initAlertPlayback();
     }
-  }, [playerRef, alertPlayerRef]);
+  }, [playerRef.current, alertPlayerRef.current]);
 
   useEffect(() => {
     if (!song) return;

@@ -15,11 +15,7 @@ type HomeProps = {
 };
 export const Home = ({ children }: HomeProps) => {
   const makeRedirectUrl = (clientId: string, redirectUrl: string) => {
-    const scopes: Features[] = [
-      Features.SOUND_ALERTS,
-      Features.SONG_REQUEST,
-      Features.EVENT_ALERTS,
-    ];
+    const scopes: Features[] = [Features.SONG_REQUEST, Features.EVENT_ALERTS];
     return `https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUrl}&scope=${TwitchHelixScopeHelper.getHelixScopesForFeature(
       scopes,
     ).join("+")}`;
