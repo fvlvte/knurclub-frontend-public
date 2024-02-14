@@ -35,7 +35,6 @@ export const OAuthHandler: React.FC = () => {
   return (
     <Home>
       <div style={{ textAlign: "center" }}>
-        <h1>KNUR CLUB WIDGET</h1>
         {isSettingsViewEnabled && <Settings></Settings>}
         {!isSettingsViewEnabled && !code && !result && (
           <h2>NIE MA KODA NIE MA LODA</h2>
