@@ -3,6 +3,7 @@ import { Config } from "../Config";
 import { useEffect, useState } from "react";
 import { Settings } from "./Settings";
 import { Home } from "./Home";
+import { PersistentStore } from "../util/PersistentStore";
 
 // eslint-disable-next-line complexity
 export const OAuthHandler: React.FC = () => {
@@ -31,6 +32,12 @@ export const OAuthHandler: React.FC = () => {
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (result !== null && result !== "ERROR") {
+      PersistentStore.setKey("token", result);
+    }
+  }, [result]);
 
   return (
     <Home>
