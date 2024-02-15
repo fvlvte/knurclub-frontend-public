@@ -9,4 +9,9 @@ export class PersistentStore {
     if (!window.localStorage) throw new Error("No localStorage present");
     return window.localStorage.getItem(key);
   }
+
+  static removeKey(key: string): void {
+    if (!window.localStorage) throw new Error("No localStorage present");
+    return window.localStorage.removeItem(key);
+  }
 }

@@ -10,7 +10,6 @@ export const OAuthHandler: React.FC = () => {
   const u = new URLSearchParams(window.location.search);
   const [result, setResult] = useState<string | null>(null);
   const code = u.get("code");
-  const [isSettingsViewEnabled, setIsSettingsViewEnabled] = useState(false);
 
   const backendUrl = Config.getNewBackendURL();
 
@@ -36,49 +35,16 @@ export const OAuthHandler: React.FC = () => {
   useEffect(() => {
     if (result !== null && result !== "ERROR") {
       PersistentStore.setKey("token", result);
+      window.location.href = "/";
     }
   }, [result]);
 
   return (
     <Home>
       <div style={{ textAlign: "center" }}>
-        {isSettingsViewEnabled && <Settings></Settings>}
-        {!isSettingsViewEnabled && !code && !result && (
-          <h2>NIE MA KODA NIE MA LODA</h2>
-        )}
-        {!isSettingsViewEnabled && code && !result && (
-          <h2>ZARA - DAJ MI MOMENT OK PROCESUJE SE</h2>
-        )}
-        {!isSettingsViewEnabled && result === "ERROR" && (
-          <h2>SORY GUWNO NIE MASZ DOSTEMPU MISIU</h2>
-        )}
-        {!isSettingsViewEnabled && result !== "ERROR" && result !== null && (
-          <h2>
-            <p>
-              <button onClick={() => setIsSettingsViewEnabled(true)}>
-                EDYTUJ USTAWIENIA
-              </button>
-            </p>
-            SongRequest/SoundAlert: Dodaj se BrowserSource (Width 960 / Height
-            540) i zaznacz opcje Control audio via OBS/Shutdown/Refresh do OBS-a
-            source na{" "}
-            <button
-              onClick={() => {
-                navigator.clipboard.writeText(
-                  Config.getWidgetWithTokenURL(result),
-                );
-                alert("OK SKOPIOWANED");
-              }}
-            >
-              SKOPIUJ LINK
-            </button>
-            <span>
-              {" "}
-              ALBO PRZECIĄGNIJ SE TEN{" "}
-              <a href={Config.getWidgetWithTokenURL(result)}>LINK</a> NA OBS
-            </span>
-          </h2>
-        )}
+        {!code && !result && <h2>NIE MA KODA NIE MA LODA</h2>}
+        {code && !result && <h2>ZARA - DAJ MI MOMENT OK PROCESUJE SE</h2>}
+        {result === "ERROR" && <h2>SORY GUWNO NIE MASZ DOSTEMPU MISIU</h2>}
       </div>
     </Home>
   );

@@ -3,6 +3,9 @@ import PolakWidget from "./components/PolakWidget";
 import { Home } from "./components/Home";
 import { useNavigation } from "./hooks/useNavigation";
 import { V2WidgetWrapper } from "./components/V2WidgetWrapper";
+import { useState } from "react";
+import { PersistentStore } from "./util/PersistentStore";
+import { HomeUser } from "./components/HomeUser";
 
 const baseRegExp =
   /^https?:\/\/[a-zA-Z-0-9.]+:?[0-9]*([/A-Za-z0-9-_]+)\??(\S*)$/i;
@@ -10,11 +13,14 @@ const baseRegExp =
 export const App = () => {
   const [path] = useNavigation();
 
+  // Divine intervention.
   if (path.length > 2137 / 2)
     return <p>KURWO KASZTANIE REDOSERZE POGRZEB MI W SERZE</p>;
 
+  const token = PersistentStore.getKey("token");
+
   const matches = path.match(baseRegExp);
-  if (!matches) return <Home />;
+  if (!matches) return token ? <HomeUser /> : <Home />;
 
   const [, route] = matches;
 
@@ -26,6 +32,6 @@ export const App = () => {
     case "/v2/widget":
       return <V2WidgetWrapper />;
     default:
-      return <Home />;
+      return token ? <HomeUser /> : <Home />;
   }
 };
