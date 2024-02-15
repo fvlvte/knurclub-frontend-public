@@ -1,7 +1,6 @@
 import { default as axios } from "axios";
 import { Config } from "../Config";
 import { useEffect, useState } from "react";
-import { Settings } from "./Settings";
 import { Home } from "./Home";
 import { PersistentStore } from "../util/PersistentStore";
 

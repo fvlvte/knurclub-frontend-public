@@ -48,7 +48,7 @@ export const HomeUser = () => {
       .post<ConfigContainer>(`${backendUrl}/v1/config`, configData, {
         headers: { "X-Knur-Key": token, "Content-Type": "application/json" },
       })
-      .then((d) => {
+      .then(() => {
         alert("OK ZAPISANED");
       })
       .catch(() => alert("AHA ERROR"))

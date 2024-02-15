@@ -3,7 +3,6 @@ import PolakWidget from "./components/PolakWidget";
 import { Home } from "./components/Home";
 import { useNavigation } from "./hooks/useNavigation";
 import { V2WidgetWrapper } from "./components/V2WidgetWrapper";
-import { useState } from "react";
 import { PersistentStore } from "./util/PersistentStore";
 import { HomeUser } from "./components/HomeUser";
 
