@@ -211,7 +211,7 @@ export const V2SR = ({ token }: V2SRProps) => {
       }
     }, 2000);
     return () => window.clearInterval(i);
-  }, []);
+  }, [song]);
 
   return (
     <div
