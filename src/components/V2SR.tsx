@@ -177,9 +177,12 @@ export const V2SR = ({ token }: V2SRProps) => {
           }
         }
 
-        const response = await axios.get(`${backendUrl}/v1/sr/playback`, {
-          headers: { "X-Knur-Key": token },
-        });
+        const response = await axios.get(
+          `${backendUrl}/v1/sr/playback?${queryStringData.toString()}`,
+          {
+            headers: { "X-Knur-Key": token },
+          },
+        );
         if (response.data.skip) {
           playerRef.current?.pause();
           initPlayback();
