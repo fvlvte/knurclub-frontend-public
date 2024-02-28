@@ -58,7 +58,7 @@ export const V2SR = ({ token }: V2SRProps) => {
           };
 
           setSong(response.data);
-          playerRef.current.src = `data:audio/mp3;base64,${response.data.mediaBase64}`;
+          playerRef.current.src = `${response.data.mediaBase64}`;
           playerRef.current.ontimeupdate = () => {
             if (
               playerRef.current?.currentTime &&
