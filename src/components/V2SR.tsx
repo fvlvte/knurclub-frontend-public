@@ -194,12 +194,13 @@ export const V2SR = ({ token }: V2SRProps) => {
         if (response.data.volume && playerRef.current) {
           playerRef.current.volume = response.data.volume;
         }
-        if (response.data.reputation && song?.userReputation) {
+        if (
+          response.data.reputation &&
+          typeof song?.userReputation !== "undefined"
+        ) {
           const newRep = response.data.reputation;
           const currentRep = song.userReputation;
 
-          // 55 - 50 = 5
-          // 55 - 60 = -5
           const diff = (currentRep - newRep) * -1;
           setVoteDiff(diff);
         } else {
