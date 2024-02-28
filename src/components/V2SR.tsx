@@ -195,7 +195,7 @@ export const V2SR = ({ token }: V2SRProps) => {
           playerRef.current.volume = response.data.volume;
         }
         if (
-          response.data.reputation &&
+          typeof response.data.reputation === "number" &&
           typeof song?.userReputation !== "undefined"
         ) {
           const newRep = response.data.reputation;
