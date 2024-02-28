@@ -81,6 +81,7 @@ export const V2SR = ({ token }: V2SRProps) => {
         setSong(null);
 
         setTimeInfo(0);
+        setVoteDiff(0);
         setDuration(0);
         setTimeout(initPlayback, BOZY_DELAY / 2);
       } else {
@@ -193,13 +194,16 @@ export const V2SR = ({ token }: V2SRProps) => {
         if (response.data.volume && playerRef.current) {
           playerRef.current.volume = response.data.volume;
         }
-        if (response.data.reputation) {
+        if (response.data.reputation && song?.userReputation) {
           const newRep = response.data.reputation;
-          const currentRep = song?.userReputation ?? 0;
+          const currentRep = song.userReputation;
+
           // 55 - 50 = 5
           // 55 - 60 = -5
           const diff = (currentRep - newRep) * -1;
           setVoteDiff(diff);
+        } else {
+          setVoteDiff(0);
         }
       } catch (e_) {
         console.error(e_);
