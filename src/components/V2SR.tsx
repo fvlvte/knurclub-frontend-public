@@ -163,6 +163,20 @@ export const V2SR = ({ token }: V2SRProps) => {
   useEffect(() => {
     const i = window.setInterval(async () => {
       try {
+        const queryStringData = new URLSearchParams();
+        if (playerRef.current) {
+          queryStringData.append(
+            "time",
+            playerRef.current.currentTime.toString(),
+          );
+          if (song) {
+            queryStringData.append(
+              "song",
+              encodeURIComponent(JSON.stringify(song)),
+            );
+          }
+        }
+
         const response = await axios.get(`${backendUrl}/v1/sr/playback`, {
           headers: { "X-Knur-Key": token },
         });
