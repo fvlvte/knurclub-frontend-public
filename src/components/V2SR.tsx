@@ -34,6 +34,8 @@ export const V2SR = ({ token }: V2SRProps) => {
   const alertPlayerRef = useRef<HTMLAudioElement>(null);
   const h1Ref = useRef<HTMLHeadingElement>(null);
 
+  const [voteDiff, setVoteDiff] = useState(0);
+
   const BOZY_DELAY = 2137;
 
   const backendUrl = Config.getNewBackendURL();
@@ -58,6 +60,7 @@ export const V2SR = ({ token }: V2SRProps) => {
           };
 
           setSong(response.data);
+          setVoteDiff(0);
           playerRef.current.src = `${response.data.mediaBase64}`;
           playerRef.current.ontimeupdate = () => {
             if (
@@ -190,6 +193,14 @@ export const V2SR = ({ token }: V2SRProps) => {
         if (response.data.volume && playerRef.current) {
           playerRef.current.volume = response.data.volume;
         }
+        if (response.data.reputation) {
+          const newRep = response.data.reputation;
+          const currentRep = song?.userReputation ?? 0;
+          // 55 - 50 = 5
+          // 55 - 60 = -5
+          const diff = (currentRep - newRep) * -1;
+          setVoteDiff(diff);
+        }
       } catch (e_) {
         console.error(e_);
       }
@@ -239,7 +250,12 @@ export const V2SR = ({ token }: V2SRProps) => {
             {song && convertToDuration(duration)}
           </p>
           <p className={"srTimer"}>
-            {song?.requestedBy} ({song?.userReputation})
+            {song?.requestedBy} ({song?.userReputation}){" "}
+            {voteDiff != 0 ? (
+              <span style={{ color: voteDiff > 0 ? "green" : "red" }}>
+                {voteDiff}
+              </span>
+            ) : null}
           </p>
         </div>
       </div>
