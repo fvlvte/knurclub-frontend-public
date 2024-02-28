@@ -255,7 +255,8 @@ export const V2SR = ({ token }: V2SRProps) => {
             {song && convertToDuration(duration)}
           </p>
           <p className={"srTimer"}>
-            {song?.requestedBy} ({song?.userReputation}){" "}
+            {song?.requestedBy} (
+            {song?.userReputation && song?.userReputation + voteDiff}){" "}
             {voteDiff != 0 ? (
               <span style={{ color: voteDiff > 0 ? "green" : "red" }}>
                 {voteDiff > 0 && "+"}
