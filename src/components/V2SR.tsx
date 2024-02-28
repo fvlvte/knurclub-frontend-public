@@ -258,6 +258,7 @@ export const V2SR = ({ token }: V2SRProps) => {
             {song?.requestedBy} ({song?.userReputation}){" "}
             {voteDiff != 0 ? (
               <span style={{ color: voteDiff > 0 ? "green" : "red" }}>
+                {voteDiff > 0 && "+"}
                 {voteDiff}
               </span>
             ) : null}
