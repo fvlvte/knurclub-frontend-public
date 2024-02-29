@@ -5,7 +5,7 @@ import { Config } from "../Config";
 import "./V2SR.css";
 
 type SongInfo = {
-  mediaBase64: string;
+  mediaBase64?: string;
   title: string;
   requestedBy: string;
   coverImage: string;
@@ -174,9 +174,11 @@ export const V2SR = ({ token }: V2SRProps) => {
             playerRef.current.currentTime.toString(),
           );
           if (song) {
+            const mutatedSong = { ...song };
+            if (mutatedSong) delete mutatedSong.mediaBase64;
             queryStringData.append(
               "song",
-              encodeURIComponent(JSON.stringify(song)),
+              encodeURIComponent(JSON.stringify(mutatedSong)),
             );
           }
         }
