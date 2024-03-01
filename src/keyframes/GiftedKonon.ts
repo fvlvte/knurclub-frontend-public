@@ -15,7 +15,7 @@ export class GiftedKonon extends GenerycznyWielkiPolak {
     for (let i = 0; i < this.ANIMATION_FRAMES; i++) {
       assetList.push({
         id: `konon${i}`,
-        path: `assets/KONON/potworzyca${i}.png`,
+        path: `/assets/KONON/potworzyca${i}.png`,
       });
     }
     return assetList;

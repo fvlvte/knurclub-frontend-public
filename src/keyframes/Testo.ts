@@ -13,7 +13,7 @@ export class Testo extends GenerycznyWielkiPolak {
   public getAssetList(): PolskiAsset[] {
     const assetList: PolskiAsset[] = [];
     for (let i = 0; i < this.ANIMATION_FRAMES; i++) {
-      assetList.push({ id: `testo${i}`, path: `assets/TESTO/testo${i}.png` });
+      assetList.push({ id: `testo${i}`, path: `/assets/TESTO/testo${i}.png` });
     }
     return assetList;
   }

@@ -10,7 +10,7 @@ export class OrzełPolski extends GenerycznyWielkiPolak {
   }
 
   public getAssetList(): PolskiAsset[] {
-    return [{ id: "orzeł", path: "assets/orzeł.png" }];
+    return [{ id: "orzeł", path: "/assets/orzeł.png" }];
   }
 
   public onUpdate(deltaTime: number) {

@@ -17,7 +17,7 @@ export class PapiezKopter extends GenerycznyWielkiPolak {
     for (let i = 0; i < this.ANIMATION_FRAMES; i++) {
       assetList.push({
         id: `bigPoppa${i}`,
-        path: `assets/PAPAJ/papiez${i}.png`,
+        path: `/assets/PAPAJ/papiez${i}.png`,
       });
     }
     return assetList;

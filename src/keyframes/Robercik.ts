@@ -10,7 +10,7 @@ export class Robercik extends GenerycznyWielkiPolak {
   }
 
   public getAssetList(): PolskiAsset[] {
-    return [{ id: "robercik", path: "assets/robercik.png" }];
+    return [{ id: "robercik", path: "/assets/robercik.png" }];
   }
 
   public onUpdate(deltaTime: number) {

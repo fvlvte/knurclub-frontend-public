@@ -5,6 +5,7 @@ import { useNavigation } from "./hooks/useNavigation";
 import { V2WidgetWrapper } from "./components/V2WidgetWrapper";
 import { PersistentStore } from "./util/PersistentStore";
 import { HomeUser } from "./components/HomeUser";
+import NewPlayer from "./components/NewPlayer";
 
 const baseRegExp =
   /^https?:\/\/[a-zA-Z-0-9.]+:?[0-9]*([/A-Za-z0-9-_]+)\??(\S*)$/i;
@@ -30,6 +31,8 @@ export const App = () => {
       return <OAuthHandler />;
     case "/v2/widget":
       return <V2WidgetWrapper />;
+    case "/new/player":
+      return <NewPlayer />;
     default:
       return token ? <HomeUser /> : <Home />;
   }

@@ -13,7 +13,7 @@ export class Zonk extends GenerycznyWielkiPolak {
   }
 
   public getAssetList(): PolskiAsset[] {
-    return [{ id: "zonk", path: "assets/zonk.png" }];
+    return [{ id: "zonk", path: "/assets/zonk.png" }];
   }
 
   public onUpdate(deltaTime: number) {

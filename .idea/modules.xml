@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/knurlements-widget.iml" filepath="$PROJECT_DIR$/.idea/knurlements-widget.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/knurlements-rewritten.iml" filepath="$PROJECT_DIR$/.idea/knurlements-rewritten.iml" />
     </modules>
   </component>
 </project>

@@ -19,7 +19,7 @@ export class Marszałek extends GenerycznyWielkiPolak {
   }
 
   public getAssetList(): PolskiAsset[] {
-    return [{ id: "marshall", path: "assets/marszalek.png" }];
+    return [{ id: "marshall", path: "/assets/marszalek.png" }];
   }
 
   public onUpdate(deltaTime: number) {

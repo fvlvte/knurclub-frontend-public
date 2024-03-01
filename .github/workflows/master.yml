@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build
-        run: REACT_APP_BACKEND_URL="https://api.knur.club"  REACT_APP_FRONTEND_URL="https://mamm0n.knur.club"  npm run build
+        run: VITE_BACKEND_URL="https://api.knur.club"  VITE_FRONTEND_URL="https://mamm0n.knur.club" npm run build
       - name: Build, tag, and push image to Docker Hub
         id: build-image
         run: |

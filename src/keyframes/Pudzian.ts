@@ -19,7 +19,7 @@ export class Pudzian extends GenerycznyWielkiPolak {
   private state: StanyPudziana = StanyPudziana.WJAZD;
 
   public getAssetList(): PolskiAsset[] {
-    return [{ id: this.constructor.name, path: "assets/mariusz.png" }];
+    return [{ id: this.constructor.name, path: "/assets/mariusz.png" }];
   }
 
   public onUpdate(deltaTime: number) {

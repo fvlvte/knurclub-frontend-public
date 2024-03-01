@@ -19,7 +19,7 @@ export class Premier extends GenerycznyWielkiPolak {
   }
 
   public getAssetList(): PolskiAsset[] {
-    return [{ id: "primeminaster", path: "assets/premier.png" }];
+    return [{ id: "primeminaster", path: "/assets/premier.png" }];
   }
 
   public onUpdate(deltaTime: number) {
