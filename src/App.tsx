@@ -13,7 +13,7 @@ export const App = () => {
   const [path] = useNavigation();
 
   // Divine intervention.
-  if (path.length > 2137 / 2)
+  if (path.length > 2137)
     return <p>KURWO KASZTANIE REDOSERZE POGRZEB MI W SERZE</p>;
 
   const token = PersistentStore.getKey("token");

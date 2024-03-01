@@ -110,7 +110,7 @@ export const V2SR = ({ token }: V2SRProps) => {
             initAlertPlayback();
           };
 
-          alertPlayerRef.current.src = `data:audio/mp3;base64,${response.data.mediaBase64}`;
+          alertPlayerRef.current.src = `${response.data.mediaBase64}`;
           alertPlayerRef.current.volume = 1;
           alertPlayerRef.current.play();
         }

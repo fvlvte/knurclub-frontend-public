@@ -4,7 +4,7 @@ export class Config {
   }
 
   public static getNewBackendURL(): string {
-    return process.env.REACT_APP_BACKEND_URL ?? "http://localhost:21377";
+    return process.env.REACT_APP_BACKEND_URL ?? "http://localhost:21378";
   }
 
   public static getTwitchOAuthRedirectUrl(): string {
