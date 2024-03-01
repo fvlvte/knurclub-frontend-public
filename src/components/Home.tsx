@@ -1,21 +1,18 @@
-import {
-  Features,
-  TwitchHelixScopeHelper,
-} from "../util/TwitchHelixScopeHelper";
-import { Config } from "../Config";
-import { NavBar } from "./NavBar";
+import {Features, TwitchHelixScopeHelper,} from "../util/TwitchHelixScopeHelper";
+import {Config} from "../Config";
+import {NavBar} from "./NavBar";
 
 import "./Home.css";
 import Footer from "./Footer";
-import { Logo } from "./Logo";
-import { ReactNode } from "react";
+import {Logo} from "./Logo";
+import {ReactNode} from "react";
 
 type HomeProps = {
   children?: ReactNode;
 };
 export const Home = ({ children }: HomeProps) => {
   const makeRedirectUrl = (clientId: string, redirectUrl: string) => {
-    const scopes: Features[] = [Features.ALL];
+    const scopes: Features[] = [Features.SONG_REQUEST, Features.SOUND_ALERTS];
     return `https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUrl}&scope=${TwitchHelixScopeHelper.getHelixScopesForFeature(
       scopes,
     ).join("+")}`;
