@@ -18,11 +18,6 @@ code {
 h1 {
   font-size: calc(69px * 1.2);
   color: white;
-  text-shadow:
-          0.07em 0 black,
-          0 0.07em black,
-          -0.07em 0 black,
-          0 -0.07em black;
 }
 
 .opacitedxD {
