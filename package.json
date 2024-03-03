@@ -17,7 +17,8 @@
     "polished": "4.3.1",
     "react": "canary",
     "react-dom": "canary",
-    "three": "0.162.0"
+    "three": "0.162.0",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "6.4.2",
@@ -26,6 +27,7 @@
     "@types/jest": "29.5.12",
     "@types/react": "18.2.61",
     "@types/react-dom": "18.2.19",
+    "@types/ws": "^8.5.10",
     "@typescript-eslint/eslint-plugin": "7.1.0",
     "@typescript-eslint/parser": "7.1.0",
     "@vitejs/plugin-react": "4.2.1",
