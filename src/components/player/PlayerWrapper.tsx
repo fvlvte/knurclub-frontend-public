@@ -7,39 +7,42 @@ import { modularScale, hiDPI } from "polished";*/
   width: 100%;
   height: 100%;
 `;*/
-import {useEffect} from "react";
-import { Container } from "./Container.tsx";
+import { useEffect } from 'react'
+import { Container } from './Container.tsx'
 
 /*type NewPlayerProps = {
   token?: string;
 };*/
 const PlayerWrapper = () => {
-  const u = new URLSearchParams(window.location.search);
-  const token = u.get("token") ?? "";
+  const u = new URLSearchParams(window.location.search)
+  const token = u.get('token') ?? ''
 
   //const DATA = MOCK_DATA;
 
-
   useEffect(() => {
-    const ws = new WebSocket(`ws://localhost:8080?token=${token}`);
+    const ws = new WebSocket(`ws://localhost:8080?token=${token}`)
 
     ws.onopen = () => {
-      console.log("opened");
+      console.log('opened')
 
-      ws.send(JSON.stringify({ type: "event.subscribe", param: ["songrequest.queue"]}));
+      ws.send(
+        JSON.stringify({
+          type: 'event.subscribe',
+          param: ['songrequest.queue'],
+        })
+      )
     }
 
-    return () => { ws.close(); }
-  }, [token]);
-
-
-
+    return () => {
+      ws.close()
+    }
+  }, [token])
 
   return (
     <>
-      <Container/>
+      <Container />
     </>
-  );
-};
+  )
+}
 
-export default PlayerWrapper;
+export default PlayerWrapper

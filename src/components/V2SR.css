@@ -1,9 +1,9 @@
 .srTimer {
-    font-size: calc(21.37px * 3.2137);
-    color: white;
-    text-shadow:
-            0.07em 0 black,
-            0 0.07em black,
-            -0.07em 0 black,
-            0 -0.07em black;
+  font-size: calc(21.37px * 3.2137);
+  color: white;
+  text-shadow:
+    0.07em 0 black,
+    0 0.07em black,
+    -0.07em 0 black,
+    0 -0.07em black;
 }

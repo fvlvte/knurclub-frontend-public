@@ -1,4 +1,4 @@
 export interface PolskiAsset {
-  id: string;
-  path: string;
+  id: string
+  path: string
 }

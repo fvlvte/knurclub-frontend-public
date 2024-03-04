@@ -1,33 +1,33 @@
-type TieredLimit = { all: number; follower: number; paid: number };
+type TieredLimit = { all: number; follower: number; paid: number }
 
 export type SongRequestV1Config = {
-  vipSkipLimits: boolean;
-  modSkipLimits: boolean;
+  vipSkipLimits: boolean
+  modSkipLimits: boolean
 
-  allowNonFollowers: boolean;
+  allowNonFollowers: boolean
 
-  queueMax: number;
+  queueMax: number
 
-  allowModsControlVolume: boolean;
+  allowModsControlVolume: boolean
 
-  viewLimit: TieredLimit;
-  lengthLimit: TieredLimit;
-  queueLimit: TieredLimit;
+  viewLimit: TieredLimit
+  lengthLimit: TieredLimit
+  queueLimit: TieredLimit
 
-  allowSkipVote: boolean;
-  requiredVotesToSkip: number;
+  allowSkipVote: boolean
+  requiredVotesToSkip: number
 
-  badVoteLimit: number;
-  badVoteDecay: number;
-};
+  badVoteLimit: number
+  badVoteDecay: number
+}
 
 export type ConfigV1 = {
-  songRequest: SongRequestV1Config;
-  translations: Record<string, string>;
-};
+  songRequest: SongRequestV1Config
+  translations: Record<string, string>
+}
 
 export type ConfigContainer = {
-  version: number;
-  updatedAt: number;
-  data: ConfigV1;
-};
+  version: number
+  updatedAt: number
+  data: ConfigV1
+}

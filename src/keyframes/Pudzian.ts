@@ -1,5 +1,5 @@
-import { GenerycznyWielkiPolak } from "./GenerycznyWielkiPolak";
-import { PolskiAsset } from "../interfaces/PolskiAsset";
+import { GenerycznyWielkiPolak } from './GenerycznyWielkiPolak'
+import { PolskiAsset } from '../interfaces/PolskiAsset'
 
 enum StanyPudziana {
   WJAZD,
@@ -9,55 +9,55 @@ enum StanyPudziana {
 }
 
 export class Pudzian extends GenerycznyWielkiPolak {
-  protected readonly SCALE_X: number = 0.666 * 0.666;
-  protected readonly SCALE_Y: number = 0.666 * 0.666;
+  protected readonly SCALE_X: number = 0.666 * 0.666
+  protected readonly SCALE_Y: number = 0.666 * 0.666
 
   constructor() {
-    super();
+    super()
   }
 
-  private state: StanyPudziana = StanyPudziana.WJAZD;
+  private state: StanyPudziana = StanyPudziana.WJAZD
 
   public getAssetList(): PolskiAsset[] {
-    return [{ id: this.constructor.name, path: "/assets/mariusz.png" }];
+    return [{ id: this.constructor.name, path: '/assets/mariusz.png' }]
   }
 
   public onUpdate(deltaTime: number) {
-    if (!this.currentImage) return;
+    if (!this.currentImage) return
 
     switch (this.state) {
       case StanyPudziana.WJAZD: {
-        this.x += this.animationSpeed * deltaTime;
+        this.x += this.animationSpeed * deltaTime
 
         if (this.x >= 0) {
-          this.state = StanyPudziana.BACZNOŚĆ;
-          this.animationSpeed = 0;
+          this.state = StanyPudziana.BACZNOŚĆ
+          this.animationSpeed = 0
         }
-        break;
+        break
       }
       case StanyPudziana.BACZNOŚĆ: {
-        this.animationSpeed += 0.0009 * deltaTime;
+        this.animationSpeed += 0.0009 * deltaTime
         if (this.animationSpeed >= 0.5) {
-          this.state = StanyPudziana.WYJAZD;
+          this.state = StanyPudziana.WYJAZD
         }
-        break;
+        break
       }
       case StanyPudziana.WYJAZD: {
-        this.x -= this.animationSpeed * deltaTime;
+        this.x -= this.animationSpeed * deltaTime
       }
     }
 
-    this.currentImage = this.assets[this.constructor.name];
+    this.currentImage = this.assets[this.constructor.name]
   }
 
   public reset() {
-    this.currentImage = this.assets[this.constructor.name];
+    this.currentImage = this.assets[this.constructor.name]
 
-    if (typeof this.currentImage !== "undefined") {
-      this.x = -1 * (this.currentImage.width * this.SCALE_X);
-      this.y = window.innerHeight - this.currentImage.height * this.SCALE_Y;
-      this.animationSpeed = 0.5;
-      this.state = StanyPudziana.WJAZD;
+    if (typeof this.currentImage !== 'undefined') {
+      this.x = -1 * (this.currentImage.width * this.SCALE_X)
+      this.y = window.innerHeight - this.currentImage.height * this.SCALE_Y
+      this.animationSpeed = 0.5
+      this.state = StanyPudziana.WJAZD
     }
   }
 }

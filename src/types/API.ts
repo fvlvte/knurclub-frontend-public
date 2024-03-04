@@ -1,27 +1,27 @@
 export enum AlertTypes {
-  SUBIK = "subik",
-  RESUBIK = "resubik",
-  BITSY = "bitsy",
-  RAJDZIK = "rajdzik",
-  SUB_GIFCIK = "sub_gifcik",
-  FOLOWEK = "folowek",
+  SUBIK = 'subik',
+  RESUBIK = 'resubik',
+  BITSY = 'bitsy',
+  RAJDZIK = 'rajdzik',
+  SUB_GIFCIK = 'sub_gifcik',
+  FOLOWEK = 'folowek',
 }
 
 export enum Entitsy {
-  MARSHALL = "MARSHALL",
-  PAPIEŻKOPTER = "PAPIEŻKOPTER",
-  MAŁYSZ = "MAŁYSZ",
-  KUBICA = "KUBICA",
-  TESTO = "TESTO",
-  MARIUSZ = "MARIUSZ",
-  PREZENTKONON = "PREZENTKONON",
-  PREMIER = "PREMIER",
-  ZONK = "ZONK",
+  MARSHALL = 'MARSHALL',
+  PAPIEŻKOPTER = 'PAPIEŻKOPTER',
+  MAŁYSZ = 'MAŁYSZ',
+  KUBICA = 'KUBICA',
+  TESTO = 'TESTO',
+  MARIUSZ = 'MARIUSZ',
+  PREZENTKONON = 'PREZENTKONON',
+  PREMIER = 'PREMIER',
+  ZONK = 'ZONK',
 }
 
 export type AlertInfo = {
-  type: AlertTypes;
-  innerHtml: string;
-  duration: number;
-  entities: Entitsy[];
-};
+  type: AlertTypes
+  innerHtml: string
+  duration: number
+  entities: Entitsy[]
+}

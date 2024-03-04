@@ -1,9 +1,9 @@
-import { GenerycznyWielkiPolak } from "../keyframes/GenerycznyWielkiPolak";
-import PolakLoader from "./PolakLoader";
+import { GenerycznyWielkiPolak } from '../keyframes/GenerycznyWielkiPolak'
+import PolakLoader from './PolakLoader'
 
 interface AgregatPolakówProps {
-  polaki: Record<string, GenerycznyWielkiPolak>;
-  onNewAssetLoaded: () => void;
+  polaki: Record<string, GenerycznyWielkiPolak>
+  onNewAssetLoaded: () => void
 }
 
 export default function AgregatPolaków(props: AgregatPolakówProps) {
@@ -16,8 +16,8 @@ export default function AgregatPolaków(props: AgregatPolakówProps) {
             key={polak.getName()}
             polak={polak}
           />
-        );
+        )
       })}
     </span>
-  );
+  )
 }

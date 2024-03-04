@@ -1,12 +1,12 @@
 export type DiscordConnectedAccount = {
-  platform: string;
-  id: string;
-};
+  platform: string
+  id: string
+}
 
 export type DiscordMember = {
-  id: string;
-  username: string;
-  tag: string;
-  avatar: string;
-  connectedAccounts: DiscordConnectedAccount[];
-};
+  id: string
+  username: string
+  tag: string
+  avatar: string
+  connectedAccounts: DiscordConnectedAccount[]
+}

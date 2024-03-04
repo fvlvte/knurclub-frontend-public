@@ -1,5 +1,5 @@
-import React from "react";
+import React from 'react'
 
 export type IconProps = {
-  style?: React.CSSProperties;
-};
+  style?: React.CSSProperties
+}

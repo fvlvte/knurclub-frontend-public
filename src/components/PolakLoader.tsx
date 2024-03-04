@@ -1,27 +1,27 @@
-import { WielkiPolak } from "../interfaces/WielkiPolak";
+import { WielkiPolak } from '../interfaces/WielkiPolak'
 
 interface PolakLoaderProps {
-  polak: WielkiPolak;
-  onNewAssetLoaded: () => void;
+  polak: WielkiPolak
+  onNewAssetLoaded: () => void
 }
 
 export default function PolakLoader(props: PolakLoaderProps) {
-  const polackieAssety = props.polak.getAssetList();
+  const polackieAssety = props.polak.getAssetList()
   const onLoadHook = (id: string) => {
     props.polak.onAssetLoaded(
       id,
       document.getElementById(
-        `${props.polak.getName()}_${id}`,
-      ) as HTMLImageElement,
-    );
-    props.onNewAssetLoaded();
-  };
+        `${props.polak.getName()}_${id}`
+      ) as HTMLImageElement
+    )
+    props.onNewAssetLoaded()
+  }
 
   return (
     <span
       id={props.polak.getName()}
       style={{
-        display: "none",
+        display: 'none',
       }}
     >
       {polackieAssety.map((emement) => {
@@ -32,8 +32,8 @@ export default function PolakLoader(props: PolakLoaderProps) {
             src={emement.path}
             key={`${props.polak.getName()}_${emement.id}`}
           />
-        );
+        )
       })}
     </span>
-  );
+  )
 }
