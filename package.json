@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:prod": "VITE_BACKEND_URL=\"https://api.knur.club\" vite",
     "build": "tsc && vite build",
     "lint:prod": "eslint . --ext ts,tsx",
     "prettier:prod": "prettier src/** --check",
