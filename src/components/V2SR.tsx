@@ -196,6 +196,17 @@ export const V2SR = ({ token }: V2SRProps) => {
         if (response.data.volume && playerRef.current) {
           playerRef.current.volume = response.data.volume
         }
+        if (response.data.playing && playerRef.current?.paused && song) {
+          playerRef.current.play().catch(console.error)
+        }
+        if (
+          !response.data.playing &&
+          playerRef.current &&
+          !playerRef.current.paused &&
+          song
+        ) {
+          playerRef.current.pause()
+        }
         if (
           typeof response.data.reputation === 'number' &&
           typeof song?.userReputation !== 'undefined'
