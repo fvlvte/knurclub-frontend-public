@@ -6,9 +6,9 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Use Node.js 20.11.0
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20.11.0
       - name: Install dependencies
@@ -18,4 +18,7 @@ jobs:
       - name: Check prettier
         run: npm run prettier:prod
       - name: Build
-        run: VITE_BACKEND_URL="https://api.knur.club"  VITE_FRONTEND_URL="https://mamm0n.knur.club" npm run build
+        run: >
+          VITE_BACKEND_URL="https://api.knur.club" 
+          VITE_FRONTEND_URL="https://mamm0n.knur.club" 
+          npm run build
