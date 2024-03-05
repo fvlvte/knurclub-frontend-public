@@ -44,7 +44,7 @@ const Progress = () => {
     display: 'flex',
     flexDirection: 'column' as const,
     alignItems: 'flex-start',
-    gap: '0.5rem',
+    gap: 'calc(0.5rem + (100vw - 800px) / 100)',
     alignSelf: 'stretch',
   }
 
@@ -58,7 +58,7 @@ const Progress = () => {
   const timestampParagraphStyle = {
     color: 'var(--base-white, #FFF)',
     fontFamily: 'Inter',
-    fontSize: '1.5rem',
+    fontSize: 'calc(1.5rem + (100vw - 800px) / 100)',
     fontStyle: 'normal',
     fontWeight: '700',
     lineHeight: 'normal',
@@ -66,11 +66,11 @@ const Progress = () => {
 
   const progressBarContainerStyle = {
     display: 'flex',
-    height: '0.3125rem',
+    height: 'calc(0.3125rem + (100vw - 800px) / 100)',
     width: '100%',
     alignItems: 'center',
     alignSelf: 'stretch',
-    borderRadius: '0.25rem',
+    borderRadius: 'calc(0.25rem + (100vw - 800px) / 100)',
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
   }
 
@@ -95,7 +95,7 @@ const Progress = () => {
         <span
           className={'player-progress-bar-progress'}
           style={{
-            height: '0.3125rem',
+            height: 'calc(0.3125rem + (100vw - 800px) / 100)',
             backgroundColor: 'var(--base-white, #FFF)',
             width: `${progressWidth}%`,
           }}

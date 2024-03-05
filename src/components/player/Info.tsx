@@ -10,34 +10,31 @@ function Info({ requesterName, pointsBalance, pointsDelta }: InfoProps) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
-
-        gap: '0.75rem',
+        gap: 'calc(0.75rem + (100vw - 800px) / 100)',
       }}
     >
       <div
         style={{
           display: 'flex',
           alignItems: 'flex-start',
-          gap: '0.75rem',
+          gap: 'calc(0.75rem + (100vw - 800px) / 100)',
         }}
       >
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '0.25rem',
+            gap: 'calc(0.25rem + (100vw - 800px) / 100)',
           }}
         >
           <div
             style={{
-              width: '3rem',
-              height: '3rem',
+              width: 'calc(2.975rem + (100vw - 800px) / 100)',
+              height: 'calc(2.75rem + (100vw - 800px) / 100)',
             }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="48"
-              height="49"
               viewBox="0 0 48 49"
               fill="none"
             >
@@ -61,7 +58,7 @@ function Info({ requesterName, pointsBalance, pointsDelta }: InfoProps) {
             style={{
               color: 'var(--base-white, #FFF)',
               fontFamily: 'Inter',
-              fontSize: '1.5rem',
+              fontSize: 'calc(1.5rem + (100vw - 800px) / 100)',
               fontStyle: 'normal',
               fontWeight: '700',
               lineHeight: 'normal',
@@ -85,12 +82,13 @@ type PointsBalanceProps = {
 function PointsBalance({ balance }: PointsBalanceProps) {
   const balanceStyles = {
     display: 'flex',
-    padding: '0.5rem 0.75rem',
+    padding:
+      'calc(0.5rem + (100vw - 800px) / 100) calc(0.75rem + (100vw - 800px) / 100)',
     flexDirection: 'column' as const,
     justifyContent: 'center',
     alignItems: 'center',
-    gap: '0.625rem',
-    borderRadius: '1.5rem',
+    gap: 'calc(0.625rem + (100vw - 800px) / 100)',
+    borderRadius: 'calc(1.5rem + (100vw - 800px) / 100)',
     border:
       balance < 0
         ? '1px solid var(--red-500, #EF4444)'
@@ -104,7 +102,7 @@ function PointsBalance({ balance }: PointsBalanceProps) {
         style={{
           color: 'var(--base-white, #FFF)',
           fontFamily: 'Inter',
-          fontSize: '1.5rem',
+          fontSize: 'calc(1.5rem + (100vw - 800px) / 100)',
           fontStyle: 'normal',
           fontWeight: '700',
           lineHeight: 'normal',
@@ -124,7 +122,7 @@ function PointsDelta({ delta }: PointsDeltaProps) {
   const deltaStyles = {
     color: 'var(--base-white, #FFF)',
     fontFamily: 'Inter',
-    fontSize: '1.5rem',
+    fontSize: 'calc(1.5rem + (100vw - 800px) / 100)',
     fontStyle: 'normal',
     fontWeight: '700',
     lineHeight: 'normal',

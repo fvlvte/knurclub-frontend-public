@@ -9,14 +9,14 @@ const Subtitle = ({ content }: SubtitleProps) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
-        gap: '0.5rem',
+        gap: 'calc(0.5rem + (100vw - 800px) / 100)',
       }}
     >
       <p
         style={{
           color: 'rgba(255, 255, 255, 0.65)',
           fontFamily: 'Inter',
-          fontSize: '2rem',
+          fontSize: 'calc(2rem + (100vw - 800px) / 100)',
           fontStyle: 'normal',
           fontWeight: '400',
           lineHeight: 'normal',
