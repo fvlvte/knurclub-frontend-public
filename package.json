@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:prod": "VITE_BACKEND_URL=\"https://api.knur.club\" vite",
+    "dev:prod": "cross-env VITE_BACKEND_URL=\"https://api.knur.club\" vite",
     "build": "tsc && vite build",
     "lint:prod": "eslint . --ext ts,tsx",
     "prettier:prod": "prettier src/** --check",
@@ -22,6 +22,7 @@
     "polished": "4.3.1",
     "react": "canary",
     "react-dom": "canary",
+    "react-icons": "^5.0.1",
     "three": "0.162.0",
     "ws": "^8.16.0"
   },
@@ -36,6 +37,7 @@
     "@typescript-eslint/eslint-plugin": "7.1.0",
     "@typescript-eslint/parser": "7.1.0",
     "@vitejs/plugin-react": "4.2.1",
+    "cross-env": "^7.0.3",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-jest": "27.9.0",
