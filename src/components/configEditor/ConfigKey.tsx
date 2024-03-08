@@ -6,6 +6,7 @@ type ConfigKeyProps = {
   onConfigChange: (key: string, change: unknown) => void
 }
 export const ConfigKey = ({ k, v, onConfigChange }: ConfigKeyProps) => {
+  if (!k.startsWith('data')) return null
   if (typeof v === 'object' && v !== null) {
     return (
       <div>

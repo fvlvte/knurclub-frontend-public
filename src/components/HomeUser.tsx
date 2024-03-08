@@ -12,6 +12,8 @@ export const HomeUser = () => {
   const [isSettingsViewEnabled, setIsSettingsViewEnabled] = useState(false)
 
   const [configData, setConfigData] = useState<ConfigContainer | null>(null)
+
+  console.log(configData)
   useEffect(() => {
     axios
       .get<ConfigContainer>(`${backendUrl}/v1/config`, {
@@ -28,7 +30,7 @@ export const HomeUser = () => {
       setConfigData((currentData) => {
         if (currentData === null) return null
         const keySplits = k.split('.')
-        let target: Record<string, unknown> = currentData?.data as Record<
+        let target: Record<string, unknown> = currentData as Record<
           string,
           unknown
         >
@@ -96,12 +98,12 @@ export const HomeUser = () => {
             <button onClick={onSave}>ZAPISZ</button>
             <div style={{ paddingTop: '3rem', paddingBottom: '3rem' }}>
               {configData &&
-                Object.keys(configData.data).map((key) => (
+                Object.keys(configData).map((key) => (
                   <ConfigKey
                     onConfigChange={onConfigChange}
                     key={key}
                     k={key}
-                    v={(configData.data as Record<string, unknown>)[key]}
+                    v={(configData as Record<string, unknown>)[key]}
                   />
                 ))}
             </div>

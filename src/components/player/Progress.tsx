@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import AudioController, { AudioState } from './AudioController.tsx'
-import { MOCK_DATA } from './UOKIK.ts'
+import { Song } from './UOKIK.ts'
 
-const Progress = () => {
-  //time w sekundach
-
-  const MOCKUP = MOCK_DATA
-
+type ProgressProps = {
+  song?: Song
+  wsProxyMessage: (data: string) => void
+}
+const Progress = ({ song, wsProxyMessage }: ProgressProps) => {
   const [playerState, setPlayerState] = useState<AudioState | null>(null)
 
   const [progressWidth, setProgressWidth] = useState(0)
@@ -74,11 +74,18 @@ const Progress = () => {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
   }
 
+  if (!song) {
+    return null
+  }
+
   return (
     <div className={'player-progress'} style={containerStyle}>
       <AudioController
-        source={MOCKUP.playerAudioSource}
-        onTimeUpdate={(as: AudioState) => setPlayerState(as)}
+        source={song.playerAudioSource}
+        onTimeUpdate={(as: AudioState) => {
+          wsProxyMessage(JSON.stringify(as))
+          setPlayerState(as)
+        }}
       />
       <div className={'player-progress-timestamp'} style={timestampStyle}>
         <span style={timestampParagraphStyle}>

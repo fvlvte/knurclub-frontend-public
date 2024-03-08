@@ -1,11 +1,16 @@
-import { MOCK_DATA } from './UOKIK.ts'
+import { PlaybackInfo, Song } from './UOKIK.ts'
 import Title from './Title.tsx'
 import { Info } from './Info.tsx'
 import Subtitle from './Subtitle.tsx'
 import Progress from './Progress.tsx'
 
-function Container() {
-  const DATA = MOCK_DATA
+type ContainerProps = {
+  song?: Song
+  playback?: PlaybackInfo
+  wsProxyMessage: (data: string) => void
+}
+function Container({ song, wsProxyMessage }: ContainerProps) {
+  if (!song) return null
 
   return (
     <div
@@ -34,7 +39,7 @@ function Container() {
           flexDirection: 'column',
           flexShrink: '0',
           borderRadius: 'calc(1.5rem + (100vw - 800px) / 100)',
-          background: `lightgray 50% / cover no-repeat url(${DATA.playerIconSource})`,
+          background: `lightgray 50% / cover no-repeat url(${song.playerIconSource})`,
         }}
       ></div>
       <div
@@ -48,14 +53,14 @@ function Container() {
           flex: '1 0 0',
         }}
       >
-        <Title title={DATA.title} />
-        <Subtitle content={DATA.subtitle} />
+        <Title title={song.title} />
+        <Subtitle content={song.subtitle} />
         <Info
-          requesterName={DATA.user.name}
-          pointsBalance={DATA.user.reputation}
+          requesterName={song.user.name}
+          pointsBalance={song.user.reputation}
           pointsDelta={0} // TODO: DODAC DANE
         />
-        <Progress />
+        <Progress wsProxyMessage={wsProxyMessage} song={song} />
       </div>
     </div>
   )

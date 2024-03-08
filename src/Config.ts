@@ -4,7 +4,7 @@ export class Config {
   }
 
   public static getNewBackendURL(): string {
-    return import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:21378'
+    return import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:21377'
   }
 
   public static getTwitchOAuthRedirectUrl(): string {

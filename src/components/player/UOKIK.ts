@@ -1,4 +1,4 @@
-type Song = {
+export type Song = {
   title: string
   subtitle: string
 
@@ -12,6 +12,12 @@ type Song = {
   }
 
   duration: number
+}
+
+export type PlaybackInfo = {
+  isPlaying: boolean
+  isDisplayed: boolean
+  volume: number
 }
 
 export const MOCK_DATA: Song = {

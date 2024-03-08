@@ -3,6 +3,9 @@ type TitleProps = {
 }
 
 const Title = ({ title }: TitleProps) => {
+  if (title.length > 20) {
+    title = title.substring(0, 20)
+  }
   return (
     <p
       style={{
