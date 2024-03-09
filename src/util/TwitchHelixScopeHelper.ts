@@ -80,6 +80,8 @@ const FeatureMatrix: Record<Features, TwitchHelixScopes[]> = {
   [Features.SONG_REQUEST]: [
     TwitchHelixScopes.UserReadSubscriptions,
     TwitchHelixScopes.ChannelReadSubscriptions,
+    TwitchHelixScopes.ChannelReadRedemptions,
+    TwitchHelixScopes.ChannelManageRedemptions,
     TwitchHelixScopes.ChannelReadGoals,
     TwitchHelixScopes.ChannelReadHypeTrain,
     TwitchHelixScopes.ModeratorReadFollowers,
