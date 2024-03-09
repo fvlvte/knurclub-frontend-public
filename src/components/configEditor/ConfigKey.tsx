@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react'
+import { ConfigTranslation } from '../../translations/ConfigTranslation.ts'
 
 type ConfigKeyProps = {
   k: string
@@ -10,7 +11,8 @@ export const ConfigKey = ({ k, v, onConfigChange }: ConfigKeyProps) => {
   if (typeof v === 'object' && v !== null) {
     return (
       <div>
-        <h2>{k}</h2> <span>ⓘ</span>
+        <h2>{ConfigTranslation.translateKey(k)}</h2>{' '}
+        <span>{ConfigTranslation.translateKeyTooltip(k) ? 'ⓘ' : ''}</span>
         <>
           {Object.keys(v).map((ck) => {
             return (
@@ -33,9 +35,9 @@ export const ConfigKey = ({ k, v, onConfigChange }: ConfigKeyProps) => {
     return (
       <div>
         <span>
-          {k} ==={' '}
+          {ConfigTranslation.translateKey(k)} ={' '}
           <input onChange={handleBooleanChange} type={'checkbox'} checked={v} />{' '}
-          <span>ⓘ</span>
+          <span>{ConfigTranslation.translateKeyTooltip(k) ? 'ⓘ' : ''}</span>
         </span>
       </div>
     )
@@ -46,8 +48,9 @@ export const ConfigKey = ({ k, v, onConfigChange }: ConfigKeyProps) => {
     return (
       <div>
         <span>
-          {k} === <input onChange={handleStringChange} value={v} />{' '}
-          <span>ⓘ</span>
+          {ConfigTranslation.translateKey(k)} ={' '}
+          <input onChange={handleStringChange} value={v} />{' '}
+          <span>{ConfigTranslation.translateKeyTooltip(k) ? 'ⓘ' : ''}</span>
         </span>
       </div>
     )
@@ -58,9 +61,9 @@ export const ConfigKey = ({ k, v, onConfigChange }: ConfigKeyProps) => {
     return (
       <div>
         <span>
-          {k} ==={' '}
+          {ConfigTranslation.translateKey(k)} ={' '}
           <input type={'number'} value={v} onChange={handleNumberChange} />{' '}
-          <span>ⓘ</span>
+          <span>{ConfigTranslation.translateKeyTooltip(k) ? 'ⓘ' : ''}</span>
         </span>
       </div>
     )
@@ -68,7 +71,7 @@ export const ConfigKey = ({ k, v, onConfigChange }: ConfigKeyProps) => {
 
   return (
     <div>
-      UNSUPPORTED TYPE {k} === {JSON.stringify(v)}
+      UNSUPPORTED TYPE {k} = {JSON.stringify(v)}
     </div>
   )
 }

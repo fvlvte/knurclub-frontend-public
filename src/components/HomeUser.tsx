@@ -20,7 +20,40 @@ export const HomeUser = () => {
         headers: { 'X-Knur-Key': token },
       })
       .then((d) => {
-        setConfigData(d.data)
+        function sortDataNested(
+          o: Record<string, unknown>
+        ): Record<string, unknown> {
+          const tmpArray: { key: string; value: unknown }[] = []
+
+          for (const key in o) {
+            tmpArray.push({
+              key: key,
+              value:
+                typeof o[key] === 'object'
+                  ? sortDataNested(o[key] as Record<string, unknown>)
+                  : o[key],
+            })
+          }
+
+          const newObject: Record<string, unknown> = {}
+
+          tmpArray.sort((a, b) => {
+            if (typeof a.value === 'object' && typeof b.value === 'object')
+              return 0
+            if (typeof a.value !== 'object' && typeof b.value === 'object')
+              return -1
+            if (typeof a.value === 'object' && typeof b.value !== 'object')
+              return 1
+            return 0
+          })
+
+          for (const item of tmpArray) {
+            newObject[item.key] = item.value
+          }
+
+          return newObject
+        }
+        setConfigData(sortDataNested(d.data) as ConfigContainer)
       })
       .catch(console.error)
   }, [])
@@ -94,8 +127,9 @@ export const HomeUser = () => {
         )}
         {isSettingsViewEnabled && (
           <>
-            <h1>Ustawienia</h1>
-            <button onClick={onSave}>ZAPISZ</button>
+            <button style={{ marginTop: '1rem' }} onClick={onSave}>
+              ZAPISZ
+            </button>
             <div style={{ paddingTop: '3rem', paddingBottom: '3rem' }}>
               {configData &&
                 Object.keys(configData).map((key) => (
@@ -106,6 +140,12 @@ export const HomeUser = () => {
                     v={(configData as Record<string, unknown>)[key]}
                   />
                 ))}
+              <button
+                style={{ marginTop: '1rem', marginBottom: '1rem' }}
+                onClick={onSave}
+              >
+                ZAPISZ
+              </button>
             </div>
           </>
         )}
