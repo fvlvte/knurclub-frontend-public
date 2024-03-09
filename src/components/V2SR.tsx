@@ -52,11 +52,13 @@ export const V2SR = ({ token }: V2SRProps) => {
         console.log(response.data)
         if (playerRef.current) {
           playerRef.current.onended = () => {
-            window.location.reload()
+            // eslint-disable-next-line no-self-assign
+            window.location.href = String(window.location.href)
           }
 
           playerRef.current.onerror = () => {
-            initPlayback()
+            // eslint-disable-next-line no-self-assign
+            window.location.href = String(window.location.href)
           }
 
           setSong(response.data)
@@ -88,12 +90,12 @@ export const V2SR = ({ token }: V2SRProps) => {
         setTimeout(initPlayback, BOZY_DELAY / 2)
       }
     } catch (e) {
-      console.error(e)
-      setTimeout(initPlayback, BOZY_DELAY / 2)
+      // eslint-disable-next-line no-self-assign
+      window.location.href = String(window.location.href)
     }
   }
 
-  const initAlertPlayback = async () => {
+  /*const initAlertPlayback = async () => {
     try {
       if (!alertPlayerRef.current?.paused) return
 
@@ -120,16 +122,13 @@ export const V2SR = ({ token }: V2SRProps) => {
     } catch (e) {
       setTimeout(initAlertPlayback, BOZY_DELAY / 2)
     }
-  }
+  }*/
 
   useEffect(() => {
     if (playerRef.current) {
       initPlayback()
     }
-    if (alertPlayerRef.current) {
-      initAlertPlayback()
-    }
-  }, [playerRef.current, alertPlayerRef.current])
+  }, [playerRef.current])
 
   useEffect(() => {
     if (!song) return
@@ -190,7 +189,8 @@ export const V2SR = ({ token }: V2SRProps) => {
           }
         )
         if (response.data.skip) {
-          window.location.reload()
+          // eslint-disable-next-line no-self-assign
+          window.location.href = String(window.location.href)
         }
         if (response.data.volume && playerRef.current) {
           playerRef.current.volume = response.data.volume
