@@ -52,7 +52,7 @@ export const V2SR = ({ token }: V2SRProps) => {
         console.log(response.data)
         if (playerRef.current) {
           playerRef.current.onended = () => {
-            initPlayback()
+            window.location.reload()
           }
 
           playerRef.current.onerror = () => {
@@ -190,8 +190,7 @@ export const V2SR = ({ token }: V2SRProps) => {
           }
         )
         if (response.data.skip) {
-          playerRef.current?.pause()
-          initPlayback()
+          window.location.reload()
         }
         if (response.data.volume && playerRef.current) {
           playerRef.current.volume = response.data.volume
