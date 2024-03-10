@@ -1,8 +1,9 @@
-type SubtitleProps = {
-  content?: string
-}
+import { useContext } from 'react'
+import SongContext from './context/SongContext.ts'
 
-const Subtitle = ({ content }: SubtitleProps) => {
+const Subtitle = () => {
+  const song = useContext(SongContext)
+
   return (
     <div
       style={{
@@ -22,7 +23,7 @@ const Subtitle = ({ content }: SubtitleProps) => {
           lineHeight: 'normal',
         }}
       >
-        {content}
+        {song?.subtitle}
       </p>
     </div>
   )

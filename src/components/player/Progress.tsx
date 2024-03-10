@@ -1,26 +1,22 @@
-import { useEffect, useState } from 'react'
-import AudioController, { AudioState } from './AudioController.tsx'
-import { Song } from './UOKIK.ts'
+import { useContext, useEffect, useState } from 'react'
+import SongContext from './context/SongContext.ts'
+import AudioInfoContext from './context/AudioInfoContext.ts'
 
-type ProgressProps = {
-  song?: Song
-  wsProxyMessage: (data: string) => void
-}
-const Progress = ({ song, wsProxyMessage }: ProgressProps) => {
-  const [playerState, setPlayerState] = useState<AudioState | null>(null)
-
+const Progress = () => {
+  const song = useContext(SongContext)
+  const audioInfo = useContext(AudioInfoContext)
   const [progressWidth, setProgressWidth] = useState(0)
 
   const calculateProgressBarWidth = () => {
-    const currTime: number = playerState?.time.current ?? 0
-    const maxTime: number = playerState?.time.duration ?? 0
+    const currTime: number = audioInfo?.time.current ?? 0
+    const maxTime: number = audioInfo?.time.duration ?? 0
     console.log(currTime, maxTime)
     setProgressWidth((currTime / maxTime) * 100)
   }
 
   useEffect(() => {
     calculateProgressBarWidth()
-  }, [playerState])
+  }, [audioInfo])
 
   const secToTime = (secIn: number) => {
     secIn = Math.round(secIn) //nie wiem na chuj połówki sekund xdd
@@ -80,19 +76,12 @@ const Progress = ({ song, wsProxyMessage }: ProgressProps) => {
 
   return (
     <div className={'player-progress'} style={containerStyle}>
-      <AudioController
-        source={song.playerAudioSource}
-        onTimeUpdate={(as: AudioState) => {
-          wsProxyMessage(JSON.stringify(as))
-          setPlayerState(as)
-        }}
-      />
       <div className={'player-progress-timestamp'} style={timestampStyle}>
         <span style={timestampParagraphStyle}>
-          {secToTime(playerState?.time.current ?? 0)}
+          {secToTime(audioInfo?.time.current ?? 0)}
         </span>
         <span style={timestampParagraphStyle}>
-          {secToTime(playerState?.time.duration ?? 0)}
+          {secToTime(audioInfo?.time.duration ?? 0)}
         </span>
       </div>
       <div

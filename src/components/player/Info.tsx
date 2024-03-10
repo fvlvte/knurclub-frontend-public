@@ -1,9 +1,11 @@
-type InfoProps = {
-  requesterName: string
-  pointsBalance: number
-  pointsDelta: number
-}
-function Info({ requesterName, pointsBalance, pointsDelta }: InfoProps) {
+import SongContext from './context/SongContext.ts'
+import { useContext } from 'react'
+//import PlaybackInfoContext from './context/PlaybackInfoContext.ts'
+
+function Info() {
+  const song = useContext(SongContext)
+  //const playbackInfo = useContext(PlaybackInfoContext)
+
   return (
     <div
       style={{
@@ -64,11 +66,10 @@ function Info({ requesterName, pointsBalance, pointsDelta }: InfoProps) {
               lineHeight: 'normal',
             }}
           >
-            {requesterName}
+            {song?.user.name ?? ''}
           </p>
-
-          <PointsBalance balance={pointsBalance} />
-          <PointsDelta delta={pointsDelta} />
+          <PointsBalance balance={song?.user.reputation ?? 0} />
+          <PointsDelta delta={0} />
         </div>
       </div>
     </div>

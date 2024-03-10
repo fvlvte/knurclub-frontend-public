@@ -1,15 +1,13 @@
-import { PlaybackInfo, Song } from './UOKIK.ts'
 import Title from './Title.tsx'
 import { Info } from './Info.tsx'
 import Subtitle from './Subtitle.tsx'
 import Progress from './Progress.tsx'
+import { useContext } from 'react'
+import SongContext from './context/SongContext.ts'
 
-type ContainerProps = {
-  song?: Song
-  playback?: PlaybackInfo
-  wsProxyMessage: (data: string) => void
-}
-function Container({ song, wsProxyMessage }: ContainerProps) {
+function Container() {
+  const song = useContext(SongContext)
+
   if (!song) return null
 
   return (
@@ -41,7 +39,7 @@ function Container({ song, wsProxyMessage }: ContainerProps) {
           borderRadius: 'calc(1.5rem + (100vw - 800px) / 100)',
           background: `lightgray 50% / cover no-repeat url(${song.playerIconSource})`,
         }}
-      ></div>
+      />
       <div
         style={{
           display: 'flex',
@@ -53,14 +51,10 @@ function Container({ song, wsProxyMessage }: ContainerProps) {
           flex: '1 0 0',
         }}
       >
-        <Title title={song.title} />
-        <Subtitle content={song.subtitle} />
-        <Info
-          requesterName={song.user.name}
-          pointsBalance={song.user.reputation}
-          pointsDelta={0} // TODO: DODAC DANE
-        />
-        <Progress wsProxyMessage={wsProxyMessage} song={song} />
+        <Title />
+        <Subtitle />
+        <Info />
+        <Progress />
       </div>
     </div>
   )

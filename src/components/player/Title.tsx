@@ -1,11 +1,14 @@
-type TitleProps = {
-  title: string
-}
+import { useContext } from 'react'
+import SongContext from './context/SongContext.ts'
 
-const Title = ({ title }: TitleProps) => {
-  if (title.length > 20) {
-    title = title.substring(0, 20)
-  }
+const Title = () => {
+  const song = useContext(SongContext)
+
+  const title =
+    (song?.title || '').length > 20
+      ? `${(song?.title || '').substring(0, 20)}...`
+      : song?.title || ''
+
   return (
     <p
       style={{
