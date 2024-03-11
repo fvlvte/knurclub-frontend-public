@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react'
+import SongContext from './context/SongContext.ts'
+import PlaybackInfoContext from './context/PlaybackInfoContext.ts'
 
 type AudioControllerProps = {
-  onPlay?: (state: AudioState) => void
+  onPlay?: (state: AudioState | null) => void
   onEnded?: (state: AudioState | Error) => void
-  onTimeUpdate?: (state: AudioState) => void
-  source?: string
-  volume?: number
+  onTimeUpdate?: (state: AudioState | null) => void
 }
 
 export type AudioState = {
@@ -23,10 +23,11 @@ const AudioController = ({
   onPlay,
   onEnded,
   onTimeUpdate,
-  source,
-  volume,
 }: AudioControllerProps) => {
   const ref = useRef<HTMLAudioElement>(null)
+
+  const song = useContext(SongContext)
+  const playbackInfo = useContext(PlaybackInfoContext)
 
   const handleError = (e: Error) => {
     if (onEnded) {
@@ -58,9 +59,6 @@ const AudioController = ({
       if (onEnded) {
         onEnded(generateCurrentAudioState(ref.current))
       }
-
-      // TODO: remove
-      ref.current.play().catch(handleError)
     }
   }
 
@@ -77,20 +75,26 @@ const AudioController = ({
       if (!ref.current.paused) {
         ref.current.pause()
       }
+      if (song?.startFrom) {
+        ref.current.fastSeek(song.startFrom)
+      }
       ref.current.volume = 0.02137
       ref.current.play().catch(handleError)
     }
-  }, [source, ref.current])
+    if (!song && onTimeUpdate) {
+      onTimeUpdate(null)
+    }
+  }, [song, ref.current])
 
   useEffect(() => {
     if (ref.current) {
-      ref.current.volume = volume ?? DEFAULT_VOLUME
+      ref.current.volume = playbackInfo?.volume ?? DEFAULT_VOLUME
     }
-  }, [volume, ref.current])
+  }, [playbackInfo?.volume, ref.current])
 
   return (
     <audio
-      src={source}
+      src={song?.playerAudioSource}
       onPlay={handlePlaybackStart}
       onEnded={handlePlaybackEnd}
       onTimeUpdate={handleTimeUpdate}

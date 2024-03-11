@@ -1,11 +1,11 @@
-import Title from './Title.tsx'
-import { Info } from './Info.tsx'
-import Subtitle from './Subtitle.tsx'
-import Progress from './Progress.tsx'
 import { useContext } from 'react'
 import SongContext from './context/SongContext.ts'
 
-function Container() {
+type ContainerProps = {
+  children?: React.ReactNode
+}
+
+function Container({ children }: ContainerProps) {
   const song = useContext(SongContext)
 
   if (!song) return null
@@ -51,10 +51,7 @@ function Container() {
           flex: '1 0 0',
         }}
       >
-        <Title />
-        <Subtitle />
-        <Info />
-        <Progress />
+        {children}
       </div>
     </div>
   )

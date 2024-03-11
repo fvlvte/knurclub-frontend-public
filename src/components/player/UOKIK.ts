@@ -2,8 +2,10 @@ export type Song = {
   title: string
   subtitle: string
 
-  playerIconSource: string
-  playerAudioSource: string
+  playerIconSource?: string
+  playerAudioSource?: string
+
+  startFrom?: number
 
   user: {
     id: string

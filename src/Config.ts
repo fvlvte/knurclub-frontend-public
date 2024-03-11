@@ -7,6 +7,10 @@ export class Config {
     return import.meta.env.VITE_BACKEND_URL ?? 'http://localhost:21377'
   }
 
+  public static getWSEndpoint(): string {
+    return import.meta.env.VITE_WSS_URL ?? 'ws://localhost:8080'
+  }
+
   public static getTwitchOAuthRedirectUrl(): string {
     return `${
       import.meta.env.VITE_FRONTEND_URL ?? 'http://localhost:3000'
