@@ -29,9 +29,10 @@ const AudioController = ({
   const song = useContext(SongContext)
   const playbackInfo = useContext(PlaybackInfoContext)
 
-  const handleError = (e: Error) => {
+  const handleError = (e: unknown) => {
+    console.error(e)
     if (onEnded) {
-      onEnded(e)
+      onEnded(e as Error)
     }
   }
 
@@ -71,7 +72,7 @@ const AudioController = ({
   }
 
   useEffect(() => {
-    if (ref.current) {
+    if (ref.current && song !== null) {
       if (!ref.current.paused) {
         ref.current.pause()
       }
@@ -79,7 +80,7 @@ const AudioController = ({
         ref.current.fastSeek(song.startFrom)
       }
       ref.current.volume = 0.02137
-      ref.current.play().catch(handleError)
+      ref.current.play()
     }
     if (!song && onTimeUpdate) {
       onTimeUpdate(null)
@@ -92,9 +93,15 @@ const AudioController = ({
     }
   }, [playbackInfo?.volume, ref.current])
 
+  if (!song) {
+    return null
+  }
+
   return (
     <audio
+      autoPlay={true}
       src={song?.playerAudioSource}
+      onError={handleError}
       onPlay={handlePlaybackStart}
       onEnded={handlePlaybackEnd}
       onTimeUpdate={handleTimeUpdate}

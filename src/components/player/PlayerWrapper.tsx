@@ -45,14 +45,17 @@ const PlayerWrapper = () => {
           setIsPreparingToPlay(false)
         }
         return
-      }
-      if (!song || !audioState) {
+      } else if (song === null) {
         param = { status: 'idle' }
       } else {
         const s = { ...song }
         delete s.playerAudioSource
         delete s.playerIconSource
-        param = { status: 'playing', song: s, audioState: audioState }
+        param = {
+          status: 'playing',
+          song: s as Song,
+          audioState: audioState as AudioState,
+        }
       }
 
       ws.send(
@@ -86,7 +89,7 @@ const PlayerWrapper = () => {
         setPlaybackInfo(null)
         setAudioState(null)
         setIsPreparingToPlay(false)
-      }, 2137)
+      }, 6666)
     }
     return () => {
       if (timeout) {
@@ -108,6 +111,7 @@ const PlayerWrapper = () => {
       )
 
       setIsSessionClosed(false)
+      setIsPreparingToPlay(true)
       setWs(ws)
     }
 
@@ -159,6 +163,14 @@ const PlayerWrapper = () => {
           ) : (
             <>
               <AudioController
+                onPlay={() => {
+                  setIsPreparingToPlay(false)
+                }}
+                onEnded={() => {
+                  setSongInfo(null)
+                  setAudioState(null)
+                  setPlaybackInfo(null)
+                }}
                 onTimeUpdate={(as) => {
                   setAudioState((prevState) => {
                     if (as === null) {
