@@ -5,8 +5,8 @@ const Title = () => {
   const song = useContext(SongContext)
 
   const title =
-    (song?.title || '').length > 20
-      ? `${(song?.title || '').substring(0, 20)}...`
+    (song?.title || '').length > 15
+      ? `${(song?.title || '').substring(0, 15)}...`
       : song?.title || ''
 
   return (
