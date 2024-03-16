@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
-import SongContext from './context/SongContext.ts'
+import BackendSongContext from './context/BackendSongContext.ts'
 
 type ContainerProps = {
   children?: React.ReactNode
 }
 
 function Container({ children }: ContainerProps) {
-  const song = useContext(SongContext)
+  const song = useContext(BackendSongContext)
 
   if (!song) return null
 

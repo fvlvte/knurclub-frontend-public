@@ -1,8 +1,8 @@
 import { useContext } from 'react'
-import SongContext from './context/SongContext.ts'
+import BackendSongContext from './context/BackendSongContext.ts'
 
 const Subtitle = () => {
-  const song = useContext(SongContext)
+  const song = useContext(BackendSongContext)
 
   return (
     <div

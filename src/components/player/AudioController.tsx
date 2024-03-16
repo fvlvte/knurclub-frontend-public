@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef } from 'react'
-import SongContext from './context/SongContext.ts'
+import BackendSongContext from './context/BackendSongContext.ts'
 import PlaybackInfoContext from './context/PlaybackInfoContext.ts'
 import { useAudioSourceCache } from './hooks/useAudioSourceCache.ts'
 
@@ -27,7 +27,7 @@ const AudioController = ({
 }: AudioControllerProps) => {
   const ref = useRef<HTMLAudioElement>(null)
 
-  const song = useContext(SongContext)
+  const song = useContext(BackendSongContext)
   const playbackInfo = useContext(PlaybackInfoContext)
   const audioSource = useAudioSourceCache(song?.audioSourceURL ?? null)
 
@@ -74,20 +74,24 @@ const AudioController = ({
   }
 
   useEffect(() => {
-    if (ref.current && song !== null) {
-      /* if (!ref.current.paused) {
-        ref.current.pause()
+    if (ref.current) {
+      const player = ref.current
+      if (player.paused) {
+        player
+          .play()
+          .then(() => {
+            console.log('Playing')
+          })
+          .catch((e) => {
+            console.error(e)
+          })
       }
-      if (song?.startFrom) {
-        ref.current.fastSeek(song.startFrom)
-      }
-      ref.current.volume = 0.02137
-      ref.current.play()*/
+      ref.current.volume = playbackInfo?.volume ?? DEFAULT_VOLUME
     }
     if (!song && onTimeUpdate) {
       onTimeUpdate(null)
     }
-  }, [song, ref.current])
+  }, [song, ref.current, audioSource])
 
   useEffect(() => {
     if (ref.current) {
@@ -95,14 +99,15 @@ const AudioController = ({
     }
   }, [playbackInfo?.volume, ref.current])
 
-  if (!song) {
+  if (!song || !audioSource) {
     return null
   }
 
   return (
     <audio
+      id={'main_player'}
       autoPlay={true}
-      src={audioSource ?? undefined}
+      src={audioSource}
       onError={handleError}
       onPlay={handlePlaybackStart}
       onEnded={handlePlaybackEnd}

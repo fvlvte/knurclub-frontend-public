@@ -1,9 +1,9 @@
-import SongContext from './context/SongContext.ts'
+import BackendSongContext from './context/BackendSongContext.ts'
 import { useContext } from 'react'
 //import PlaybackInfoContext from './context/PlaybackInfoContext.ts'
 
 function Info() {
-  const song = useContext(SongContext)
+  const song = useContext(BackendSongContext)
   //const playbackInfo = useContext(PlaybackInfoContext)
 
   return (

@@ -1,18 +1,15 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { Container } from './Container.tsx'
 import { PlaybackInfo } from './types/Common.ts'
 import AudioController, { AudioState } from './AudioController.tsx'
-import SongContext from './context/SongContext.ts'
+import BackendSongContext from './context/BackendSongContext.ts'
 import AudioInfoContext from './context/AudioInfoContext.ts'
 import PlaybackInfoContext from './context/PlaybackInfoContext.ts'
 import Title from './Title.tsx'
 import Subtitle from './Subtitle.tsx'
 import { Info } from './Info.tsx'
 import Progress from './Progress.tsx'
-import { useWebsocket } from './hooks/useWebsocket.ts'
-import { socketMessageToCacheAction } from './util/cacheUtils.ts'
 import { useBackendSong } from './hooks/useBackendSong.ts'
-import WebSocketContext from './context/WebSocketContext.ts'
 
 const PlayerWrapper = () => {
   const song = useBackendSong()
@@ -20,18 +17,10 @@ const PlayerWrapper = () => {
   const [playbackInfo, setPlaybackInfo] = useState<PlaybackInfo | null>(null)
   const [, setIsPreparingToPlay] = useState(true)
 
-  const ws = useContext(WebSocketContext)
-
   const [isSessionClosed] = useState(false)
 
-  const { onMessageRef } = useWebsocket(ws.ws)
-
-  onMessageRef.current = (message: unknown) => {
-    return socketMessageToCacheAction(message as string)
-  }
-
   return (
-    <SongContext.Provider value={song}>
+    <BackendSongContext.Provider value={song}>
       <AudioInfoContext.Provider value={audioState}>
         <PlaybackInfoContext.Provider value={playbackInfo}>
           {isSessionClosed ? (
@@ -75,7 +64,7 @@ const PlayerWrapper = () => {
           )}
         </PlaybackInfoContext.Provider>
       </AudioInfoContext.Provider>
-    </SongContext.Provider>
+    </BackendSongContext.Provider>
   )
 }
 

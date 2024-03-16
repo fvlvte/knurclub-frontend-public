@@ -52,12 +52,10 @@ export const V2SR = ({ token }: V2SRProps) => {
         console.log(response.data)
         if (playerRef.current) {
           playerRef.current.onended = () => {
-            // eslint-disable-next-line no-self-assign
             window.location.href = String(window.location.href)
           }
 
           playerRef.current.onerror = () => {
-            // eslint-disable-next-line no-self-assign
             window.location.href = String(window.location.href)
           }
 
@@ -90,7 +88,6 @@ export const V2SR = ({ token }: V2SRProps) => {
         setTimeout(initPlayback, BOZY_DELAY / 2)
       }
     } catch (e) {
-      // eslint-disable-next-line no-self-assign
       window.location.href = String(window.location.href)
     }
   }
@@ -189,7 +186,6 @@ export const V2SR = ({ token }: V2SRProps) => {
           }
         )
         if (response.data.skip) {
-          // eslint-disable-next-line no-self-assign
           window.location.href = String(window.location.href)
         }
         if (response.data.volume && playerRef.current) {

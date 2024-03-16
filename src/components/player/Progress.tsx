@@ -1,16 +1,15 @@
 import { useContext, useEffect, useState } from 'react'
-import SongContext from './context/SongContext.ts'
+import BackendSongContext from './context/BackendSongContext.ts'
 import AudioInfoContext from './context/AudioInfoContext.ts'
 
 const Progress = () => {
-  const song = useContext(SongContext)
+  const song = useContext(BackendSongContext)
   const audioInfo = useContext(AudioInfoContext)
   const [progressWidth, setProgressWidth] = useState(0)
 
   const calculateProgressBarWidth = () => {
     const currTime: number = audioInfo?.time.current ?? 0
     const maxTime: number = audioInfo?.time.duration ?? 0
-    console.log(currTime, maxTime)
     setProgressWidth((currTime / maxTime) * 100)
   }
 

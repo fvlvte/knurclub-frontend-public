@@ -1,8 +1,8 @@
 import { useContext } from 'react'
-import SongContext from './context/SongContext.ts'
+import BackendSongContext from './context/BackendSongContext.ts'
 
 const Title = () => {
-  const song = useContext(SongContext)
+  const song = useContext(BackendSongContext)
 
   const title =
     (song?.title || '').length > 15
