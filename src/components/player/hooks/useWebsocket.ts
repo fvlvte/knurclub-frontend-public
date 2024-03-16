@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-export function useWebsocket(ws: WebSocket) {
+export function useWebsocket(ws: WebSocket | null) {
   const [socket, setSocket] = useState<WebSocket | null>(null)
   const onMessageRef = useRef<((message: unknown) => Promise<unknown>) | null>(
     null
   )
 
   const cleanUpSocket = useCallback(() => {
+    if (!ws) return
+
     if (socket) {
       socket.close()
       setSocket(null)
@@ -14,6 +16,7 @@ export function useWebsocket(ws: WebSocket) {
   }, [socket])
 
   useEffect(() => {
+    if (!ws) return
     setSocket(ws)
     ws.onopen = () => {
       ws?.send(

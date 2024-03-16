@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { Container } from './Container.tsx'
-import { PlaybackInfo, Song } from './UOKIK.ts'
+import { PlaybackInfo } from './types/Common.ts'
 import AudioController, { AudioState } from './AudioController.tsx'
 import SongContext from './context/SongContext.ts'
 import AudioInfoContext from './context/AudioInfoContext.ts'
@@ -11,38 +11,24 @@ import { Info } from './Info.tsx'
 import Progress from './Progress.tsx'
 import { useWebsocket } from './hooks/useWebsocket.ts'
 import { socketMessageToCacheAction } from './util/cacheUtils.ts'
-import { getWsClient } from './util/getWsClient.ts'
-import { useAudioSourceCache } from './hooks/useAudioSourceCache.ts'
-
-const u = new URLSearchParams(window.location.search)
-const token = u.get('token') ?? ''
-
-const ws = getWsClient(token)
+import { useBackendSong } from './hooks/useBackendSong.ts'
+import WebSocketContext from './context/WebSocketContext.ts'
 
 const PlayerWrapper = () => {
-  /* Context Variables */
-  const [song, setSongInfo] = useState<Song | null>(null)
+  const song = useBackendSong()
   const [audioState, setAudioState] = useState<AudioState | null>(null)
   const [playbackInfo, setPlaybackInfo] = useState<PlaybackInfo | null>(null)
   const [, setIsPreparingToPlay] = useState(true)
 
+  const ws = useContext(WebSocketContext)
+
   const [isSessionClosed] = useState(false)
 
-  const { onMessageRef } = useWebsocket(ws)
-
-  const [url, setUrl] = useState<string | null>(null)
+  const { onMessageRef } = useWebsocket(ws.ws)
 
   onMessageRef.current = (message: unknown) => {
-    if (url !== 'https://www.youtube.com/watch?v=oqzTignky58')
-      setUrl('https://www.youtube.com/watch?v=oqzTignky58')
     return socketMessageToCacheAction(message as string)
   }
-
-  const audioSourceCache = useAudioSourceCache(url)
-
-  useEffect(() => {
-    console.log(audioSourceCache)
-  }, [audioSourceCache])
 
   return (
     <SongContext.Provider value={song}>
@@ -57,7 +43,6 @@ const PlayerWrapper = () => {
                   setIsPreparingToPlay(false)
                 }}
                 onEnded={() => {
-                  setSongInfo(null)
                   setAudioState(null)
                   setPlaybackInfo(null)
                 }}
@@ -70,7 +55,7 @@ const PlayerWrapper = () => {
                     } else if (
                       Math.abs(
                         as.time.current - (prevState?.time.current ?? 0)
-                      ) > 1 ||
+                      ) > 0.666 ||
                       prevState.isPlaying !== as.isPlaying
                     ) {
                       return as

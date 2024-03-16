@@ -19,7 +19,7 @@ const Progress = () => {
   }, [audioInfo])
 
   const secToTime = (secIn: number) => {
-    secIn = Math.round(secIn) //nie wiem na chuj połówki sekund xdd
+    secIn = Math.round(secIn)
     const h: number = Math.floor(secIn / 3600)
     secIn -= Math.floor(h * 3600)
     const m: number = Math.floor(secIn / 60)

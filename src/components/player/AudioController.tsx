@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef } from 'react'
 import SongContext from './context/SongContext.ts'
 import PlaybackInfoContext from './context/PlaybackInfoContext.ts'
+import { useAudioSourceCache } from './hooks/useAudioSourceCache.ts'
 
 type AudioControllerProps = {
   onPlay?: (state: AudioState | null) => void
@@ -28,11 +29,12 @@ const AudioController = ({
 
   const song = useContext(SongContext)
   const playbackInfo = useContext(PlaybackInfoContext)
+  const audioSource = useAudioSourceCache(song?.audioSourceURL ?? null)
 
   const handleError = (e: unknown) => {
     console.error(e)
     if (onEnded) {
-      onEnded(e as Error)
+      //onEnded(e as Error)
     }
   }
 
@@ -58,7 +60,7 @@ const AudioController = ({
   const handlePlaybackEnd = () => {
     if (ref.current) {
       if (onEnded) {
-        onEnded(generateCurrentAudioState(ref.current))
+        //onEnded(generateCurrentAudioState(ref.current))
       }
     }
   }
@@ -66,21 +68,21 @@ const AudioController = ({
   const handlePlaybackStart = () => {
     if (ref.current) {
       if (onPlay) {
-        onPlay(generateCurrentAudioState(ref.current))
+        //onPlay(generateCurrentAudioState(ref.current))
       }
     }
   }
 
   useEffect(() => {
     if (ref.current && song !== null) {
-      if (!ref.current.paused) {
+      /* if (!ref.current.paused) {
         ref.current.pause()
       }
       if (song?.startFrom) {
         ref.current.fastSeek(song.startFrom)
       }
       ref.current.volume = 0.02137
-      ref.current.play()
+      ref.current.play()*/
     }
     if (!song && onTimeUpdate) {
       onTimeUpdate(null)
@@ -100,7 +102,7 @@ const AudioController = ({
   return (
     <audio
       autoPlay={true}
-      src={song?.playerAudioSource}
+      src={audioSource ?? undefined}
       onError={handleError}
       onPlay={handlePlaybackStart}
       onEnded={handlePlaybackEnd}

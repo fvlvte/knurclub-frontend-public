@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { Song } from '../UOKIK.ts'
+import { BackendSong } from '../hooks/useBackendSong.ts'
 
-const SongContext = createContext<Song | null>(null)
+const SongContext = createContext<BackendSong | null>(null)
 export default SongContext

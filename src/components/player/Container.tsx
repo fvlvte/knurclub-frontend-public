@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import React, { useContext } from 'react'
 import SongContext from './context/SongContext.ts'
 
 type ContainerProps = {
@@ -37,7 +37,7 @@ function Container({ children }: ContainerProps) {
           flexDirection: 'column',
           flexShrink: '0',
           borderRadius: 'calc(1.5rem + (100vw - 800px) / 100)',
-          background: `lightgray 50% / cover no-repeat url(${song.playerIconSource})`,
+          background: `lightgray 50% / cover no-repeat url(${song.iconSource})`,
         }}
       />
       <div

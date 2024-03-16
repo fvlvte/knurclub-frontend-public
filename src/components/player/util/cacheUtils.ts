@@ -1,4 +1,4 @@
-import { getWsClient } from './getWsClient.ts'
+import { WebSocketSingleton } from '../managers/WebSocketSingleton.ts'
 
 const CACHE_MAX = 100
 
@@ -42,8 +42,8 @@ export async function songAudioCacheGetFetch(url: string) {
     i.timestamp = new Date().getTime()
   }
   if (!i) {
-    const wsClient = getWsClient()
-    wsClient.send(JSON.stringify({ type: 'sr.v1.fetch', param: [url] }))
+    const wsClient = WebSocketSingleton.getInstance().getWebSocket()
+    wsClient?.send(JSON.stringify({ type: 'sr.v1.fetch', param: [url] }))
     return songAudioCacheGetReal(url)
   }
   return i?.data

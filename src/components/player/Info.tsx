@@ -43,16 +43,16 @@ function Info() {
               <path
                 d="M24.0006 26.6667C29.5234 26.6667 34.0006 22.1895 34.0006 16.6667C34.0006 11.1438 29.5234 6.66667 24.0006 6.66667C18.4777 6.66667 14.0006 11.1438 14.0006 16.6667C14.0006 22.1895 18.4777 26.6667 24.0006 26.6667Z"
                 stroke="white"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M40.0006 42.6664C40.0006 38.4229 38.3149 34.3533 35.3143 31.3527C32.3137 28.3521 28.244 26.6664 24.0006 26.6664C19.7571 26.6664 15.6874 28.3521 12.6869 31.3527C9.68627 34.3533 8.00056 38.4229 8.00056 42.6664"
                 stroke="white"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </div>

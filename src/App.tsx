@@ -5,7 +5,7 @@ import { useNavigation } from './hooks/useNavigation'
 import { V2WidgetWrapper } from './components/V2WidgetWrapper'
 import { PersistentStore } from './util/PersistentStore'
 import { HomeUser } from './components/HomeUser'
-import PlayerWrapper from './components/player/PlayerWrapper.tsx'
+import { Player } from './components/player/Player.tsx'
 
 const baseRegExp =
   /^https?:\/\/[a-zA-Z-0-9.]+:?[0-9]*([/A-Za-z0-9-_]+)\??(\S*)$/i
@@ -32,7 +32,7 @@ export const App = () => {
     case '/v2/widget':
       return <V2WidgetWrapper />
     case '/new/player':
-      return <PlayerWrapper />
+      return <Player />
     default:
       return token ? <HomeUser /> : <Home />
   }
