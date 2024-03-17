@@ -1,5 +1,5 @@
-import { useContext } from 'react'
-import BackendSongContext from './context/BackendSongContext.ts'
+import React, { useContext } from 'react'
+import BackendSongContext from '../context/BackendSongContext.ts'
 
 const Subtitle = () => {
   const song = useContext(BackendSongContext)
@@ -28,4 +28,6 @@ const Subtitle = () => {
     </div>
   )
 }
-export default Subtitle
+
+const MemorizedSubtitle = React.memo(Subtitle)
+export default MemorizedSubtitle

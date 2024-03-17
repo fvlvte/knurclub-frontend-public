@@ -1,4 +1,7 @@
 enum WSNetworkFrameType {
+  SERVER_HELLO = 'server.hello',
+  CLIENT_HELLO = 'client.hello',
+
   SR_V1_CACHE_QUERY_BULK = 'sr.v1.cache.query.bulk',
   SR_V1_CACHE_QUERY_BULK_RESULT = 'sr.v1.cache.query.bulk.result',
   SR_V1_CACHE_STORE = 'sr.v1.cache.store',
@@ -11,6 +14,22 @@ type WSNetworkFrame = {
   isReply?: boolean
   type: WSNetworkFrameType
   params: unknown
+}
+
+type SERVER_HELLO = {
+  type: WSNetworkFrameType.SERVER_HELLO
+  params: {
+    version: string
+    serverId: string
+  }
+}
+
+type CLIENT_HELLO = {
+  type: WSNetworkFrameType.CLIENT_HELLO
+  params: {
+    version: string
+    clientId: string
+  }
 }
 
 type SR_V1_CACHE_QUERY_BULK = {
@@ -44,6 +63,8 @@ type SR_V1_CACHE_STORE_RESULT = {
 export {
   type WSNetworkFrame,
   WSNetworkFrameType,
+  type SERVER_HELLO,
+  type CLIENT_HELLO,
   type SR_V1_CACHE_QUERY_BULK,
   type SR_V1_FETCH,
   type SR_V1_CACHE_QUERY_BULK_RESULT,

@@ -1,5 +1,5 @@
 import { Config } from '../../../Config.ts'
-import { WSNetworkFrame } from '../types/WebSocketProtocol.ts'
+import { WSNetworkFrame } from '../types/WSShared.ts'
 
 export class WebSocketSingleton {
   private static instance: WebSocketSingleton

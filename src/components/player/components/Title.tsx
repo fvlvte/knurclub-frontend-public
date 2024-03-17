@@ -1,5 +1,5 @@
-import { useContext } from 'react'
-import BackendSongContext from './context/BackendSongContext.ts'
+import React, { useContext } from 'react'
+import BackendSongContext from '../context/BackendSongContext.ts'
 
 const Title = () => {
   const song = useContext(BackendSongContext)
@@ -25,4 +25,6 @@ const Title = () => {
     </p>
   )
 }
-export default Title
+
+const MemorizedTitle = React.memo(Title)
+export default MemorizedTitle

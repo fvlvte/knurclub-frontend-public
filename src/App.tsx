@@ -5,7 +5,7 @@ import { useNavigation } from './hooks/useNavigation'
 import { V2WidgetWrapper } from './components/V2WidgetWrapper'
 import { PersistentStore } from './util/PersistentStore'
 import { HomeUser } from './components/HomeUser'
-import { Player } from './components/player/Player.tsx'
+import Player from './components/player/Player.tsx'
 
 const baseRegExp =
   /^https?:\/\/[a-zA-Z-0-9.]+:?[0-9]*([/A-Za-z0-9-_]+)\??(\S*)$/i

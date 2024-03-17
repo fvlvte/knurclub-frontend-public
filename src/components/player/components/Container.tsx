@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import BackendSongContext from './context/BackendSongContext.ts'
+import BackendSongContext from '../context/BackendSongContext.ts'
 
 type ContainerProps = {
   children?: React.ReactNode
@@ -56,4 +56,6 @@ function Container({ children }: ContainerProps) {
     </div>
   )
 }
-export { Container }
+
+const MemorizedContainer = React.memo(Container)
+export default MemorizedContainer

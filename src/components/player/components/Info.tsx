@@ -1,5 +1,5 @@
-import BackendSongContext from './context/BackendSongContext.ts'
-import { useContext } from 'react'
+import BackendSongContext from '../context/BackendSongContext.ts'
+import React, { useContext } from 'react'
 //import PlaybackInfoContext from './context/PlaybackInfoContext.ts'
 
 function Info() {
@@ -137,4 +137,5 @@ function PointsDelta({ delta }: PointsDeltaProps) {
   )
 }
 
-export { Info }
+const MemorizedInfo = React.memo(Info)
+export default MemorizedInfo

@@ -27,7 +27,6 @@ export abstract class GenerycznyWielkiPolak implements WielkiPolak {
 
   onAssetLoaded(id: string, asset: HTMLImageElement): void {
     this.assets[id] = asset
-    console.log(id, asset)
     this.reset()
   }
 

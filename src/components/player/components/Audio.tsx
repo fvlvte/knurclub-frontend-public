@@ -1,7 +1,7 @@
-import { useContext, useEffect, useRef } from 'react'
-import BackendSongContext from './context/BackendSongContext.ts'
-import PlaybackInfoContext from './context/PlaybackInfoContext.ts'
-import { useAudioSourceCache } from './hooks/useAudioSourceCache.ts'
+import React, { useContext, useEffect, useRef } from 'react'
+import BackendSongContext from '../context/BackendSongContext.ts'
+import PlaybackInfoContext from '../context/PlaybackInfoContext.ts'
+import { useAudioSourceCache } from '../hooks/useAudioSourceCache.ts'
 
 type AudioControllerProps = {
   onPlay?: (state: AudioState | null) => void
@@ -20,11 +20,7 @@ export type AudioState = {
 
 const DEFAULT_VOLUME = 0.5
 
-const AudioController = ({
-  onPlay,
-  onEnded,
-  onTimeUpdate,
-}: AudioControllerProps) => {
+const Audio = ({ onPlay, onEnded, onTimeUpdate }: AudioControllerProps) => {
   const ref = useRef<HTMLAudioElement>(null)
 
   const song = useContext(BackendSongContext)
@@ -79,9 +75,7 @@ const AudioController = ({
       if (player.paused) {
         player
           .play()
-          .then(() => {
-            console.log('Playing')
-          })
+          .then(() => {})
           .catch((e) => {
             console.error(e)
           })
@@ -105,8 +99,6 @@ const AudioController = ({
 
   return (
     <audio
-      id={'main_player'}
-      autoPlay={true}
       src={audioSource}
       onError={handleError}
       onPlay={handlePlaybackStart}
@@ -117,4 +109,5 @@ const AudioController = ({
   )
 }
 
-export default AudioController
+const MemorizedAudio = React.memo(Audio)
+export default MemorizedAudio

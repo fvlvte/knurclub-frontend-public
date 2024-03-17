@@ -1,18 +1,20 @@
 import WebSocketContext, {
   WebSocketContextType,
-} from './context/WebSocketContext.ts'
+} from '../context/WebSocketContext.ts'
 import React, { useEffect, useState } from 'react'
-import { WebSocketSingleton } from './managers/WebSocketSingleton.ts'
+import { WebSocketSingleton } from '../managers/WebSocketSingleton.ts'
 import { default as equal } from 'deep-equal'
 import {
+  CLIENT_HELLO,
+  SERVER_HELLO,
   SR_V1_CACHE_QUERY_BULK,
   SR_V1_CACHE_QUERY_BULK_RESULT,
   SR_V1_CACHE_STORE,
   SR_V1_CACHE_STORE_RESULT,
   WSNetworkFrame,
   WSNetworkFrameType,
-} from './types/WebSocketProtocol.ts'
-import { songAudioCacheGet, songAudioCacheSet } from './util/cacheUtils.ts'
+} from '../types/WSShared.ts'
+import { songAudioCacheGet, songAudioCacheSet } from '../util/cacheUtils.ts'
 
 type WebSocketWrapperProps = {
   token: string
@@ -20,6 +22,7 @@ type WebSocketWrapperProps = {
 }
 
 export function WebSocketWrapper(props: WebSocketWrapperProps) {
+  const [helloPacketExchanged, setHelloPacketExchanged] = useState(false)
   const [webSocketContext, setWebSocketContext] =
     useState<WebSocketContextType>({
       ws: null,
@@ -28,10 +31,24 @@ export function WebSocketWrapper(props: WebSocketWrapperProps) {
 
   const globalMessageHandler = async (message: MessageEvent) => {
     const { isReply, type } = JSON.parse(message.data) as WSNetworkFrame
-    const data = JSON.parse(message.data)
-    console.log(data)
+    const data = JSON.parse(message.data) as WSNetworkFrame
+
     if (isReply) return
+
     switch (type) {
+      case WSNetworkFrameType.SERVER_HELLO: {
+        const parsed = data as SERVER_HELLO
+        console.log('Server Hello', parsed.params)
+        WebSocketSingleton.getInstance().sendFrameNoResponse({
+          type: WSNetworkFrameType.CLIENT_HELLO,
+          params: {
+            version: '1.0',
+            clientId: 'web',
+          },
+        } as CLIENT_HELLO)
+        setHelloPacketExchanged(true)
+        break
+      }
       case WSNetworkFrameType.SR_V1_CACHE_QUERY_BULK: {
         const parsed = data as SR_V1_CACHE_QUERY_BULK
         const ret: SR_V1_CACHE_QUERY_BULK_RESULT = {
@@ -58,6 +75,8 @@ export function WebSocketWrapper(props: WebSocketWrapperProps) {
         } as SR_V1_CACHE_STORE_RESULT)
         break
       }
+      default:
+        console.error(`Unhandled frame type ${type}`)
     }
   }
 
@@ -102,6 +121,7 @@ export function WebSocketWrapper(props: WebSocketWrapperProps) {
     <WebSocketContext.Provider value={webSocketContext}>
       {webSocketContext.isConnected &&
         webSocketContext.ws !== null &&
+        helloPacketExchanged &&
         props.children}
     </WebSocketContext.Provider>
   )

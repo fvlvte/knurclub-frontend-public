@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from 'react'
-import BackendSongContext from './context/BackendSongContext.ts'
-import AudioInfoContext from './context/AudioInfoContext.ts'
+import React, { useContext, useEffect, useState } from 'react'
+import BackendSongContext from '../context/BackendSongContext.ts'
+import AudioInfoContext from '../context/AudioInfoContext.ts'
 
 const Progress = () => {
   const song = useContext(BackendSongContext)
@@ -100,4 +100,5 @@ const Progress = () => {
   )
 }
 
-export default Progress
+const MemorizedProgress = React.memo(Progress)
+export default MemorizedProgress

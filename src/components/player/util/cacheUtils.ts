@@ -1,5 +1,5 @@
 import { WebSocketSingleton } from '../managers/WebSocketSingleton.ts'
-import { WSNetworkFrameType } from '../types/WebSocketProtocol.ts'
+import { WSNetworkFrameType } from '../types/WSShared.ts'
 
 const CACHE_MAX = 100
 
@@ -17,7 +17,6 @@ export async function songAudioCacheSet(url: string, data: string) {
   songAudioCache.set(url, { data: data, timestamp: new Date().getTime() })
 
   if (cacheSetPromises.has(url)) {
-    console.log('cacheSetPromises has url')
     cacheSetPromises.get(url)?.(data)
     cacheSetPromises.delete(url)
   }
@@ -33,11 +32,11 @@ export async function songAudioCacheGet(url: string) {
 
 async function songAudioCacheGetReal(url: string): Promise<string> {
   return new Promise((resolve) => {
+    cacheSetPromises.set(url, resolve)
     WebSocketSingleton.getInstance().sendFrameNoResponse({
       type: WSNetworkFrameType.SR_V1_FETCH,
       params: [url],
     })
-    cacheSetPromises.set(url, resolve)
   })
 }
 
