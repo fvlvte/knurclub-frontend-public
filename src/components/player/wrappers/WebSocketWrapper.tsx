@@ -5,16 +5,19 @@ import React, { useEffect, useState } from 'react'
 import { WebSocketSingleton } from '../managers/WebSocketSingleton.ts'
 import { default as equal } from 'deep-equal'
 import {
+  BackendSong,
   CLIENT_HELLO,
   SERVER_HELLO,
   SR_V1_CACHE_QUERY_BULK,
   SR_V1_CACHE_QUERY_BULK_RESULT,
   SR_V1_CACHE_STORE,
   SR_V1_CACHE_STORE_RESULT,
+  SR_V1_CHANGE_CURRENT_SONG,
   WSNetworkFrame,
   WSNetworkFrameType,
 } from '../types/WSShared.ts'
 import { songAudioCacheGet, songAudioCacheSet } from '../util/cacheUtils.ts'
+import BackendSongContext from '../context/BackendSongContext.ts'
 
 type WebSocketWrapperProps = {
   token: string
@@ -28,6 +31,8 @@ export function WebSocketWrapper(props: WebSocketWrapperProps) {
       ws: null,
       isConnected: false,
     })
+
+  const [song, setSong] = useState<BackendSong | null>(null)
 
   const globalMessageHandler = async (message: MessageEvent) => {
     const { isReply, type } = JSON.parse(message.data) as WSNetworkFrame
@@ -47,6 +52,11 @@ export function WebSocketWrapper(props: WebSocketWrapperProps) {
           },
         } as CLIENT_HELLO)
         setHelloPacketExchanged(true)
+        break
+      }
+      case WSNetworkFrameType.SR_V1_CHANGE_CURRENT_SONG: {
+        const parsed = data as SR_V1_CHANGE_CURRENT_SONG
+        setSong(parsed.params)
         break
       }
       case WSNetworkFrameType.SR_V1_CACHE_QUERY_BULK: {
@@ -119,10 +129,12 @@ export function WebSocketWrapper(props: WebSocketWrapperProps) {
 
   return (
     <WebSocketContext.Provider value={webSocketContext}>
-      {webSocketContext.isConnected &&
-        webSocketContext.ws !== null &&
-        helloPacketExchanged &&
-        props.children}
+      <BackendSongContext.Provider value={song}>
+        {webSocketContext.isConnected &&
+          webSocketContext.ws !== null &&
+          helloPacketExchanged &&
+          props.children}
+      </BackendSongContext.Provider>
     </WebSocketContext.Provider>
   )
 }

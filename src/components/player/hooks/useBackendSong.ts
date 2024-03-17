@@ -1,22 +1,5 @@
 import { useState } from 'react'
-
-export type BackendSong = {
-  title: string
-  subtitle: string
-
-  audioSourceURL?: string
-  iconSource?: string
-  startFrom?: number
-
-  user: {
-    id: string
-    name: string
-    reputation: number
-  }
-
-  duration: number
-  playing: boolean
-}
+import { BackendSong } from '../types/WSShared.ts'
 
 export function useBackendSong() {
   const [song] = useState<BackendSong | null>({

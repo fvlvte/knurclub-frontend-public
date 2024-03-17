@@ -23,9 +23,7 @@
     "polished": "4.3.1",
     "react": "canary",
     "react-dom": "canary",
-    "react-icons": "5.0.1",
-    "three": "0.162.0",
-    "ws": "^8.16.0"
+    "react-icons": "5.0.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "6.4.2",

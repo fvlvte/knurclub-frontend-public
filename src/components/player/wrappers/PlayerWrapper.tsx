@@ -1,14 +1,11 @@
 import React, { useCallback, useState } from 'react'
 import { PlaybackInfo } from '../types/Common.ts'
 import { AudioState } from '../components/Audio.tsx'
-import BackendSongContext from '../context/BackendSongContext.ts'
 import AudioInfoContext from '../context/AudioInfoContext.ts'
 import PlaybackInfoContext from '../context/PlaybackInfoContext.ts'
 import { Components } from '../'
-import { useBackendSong } from '../hooks/useBackendSong.ts'
 
 const PlayerWrapper = () => {
-  const song = useBackendSong()
   const [audioState, setAudioState] = useState<AudioState | null>(null)
   const [playbackInfo, setPlaybackInfo] = useState<PlaybackInfo | null>(null)
   const [, setIsPreparingToPlay] = useState(true)
@@ -45,29 +42,27 @@ const PlayerWrapper = () => {
   }, [setIsPreparingToPlay])
 
   return (
-    <BackendSongContext.Provider value={song}>
-      <AudioInfoContext.Provider value={audioState}>
-        <PlaybackInfoContext.Provider value={playbackInfo}>
-          {isSessionClosed ? (
-            <h1 style={{ color: 'black' }}>SESSION CLOSED - REFRESH SOURCE</h1>
-          ) : (
-            <>
-              <Components.Audio
-                onPlay={onPlay}
-                onEnded={onEnded}
-                onTimeUpdate={onTimeUpdate}
-              />
-              <Components.Container>
-                <Components.Title />
-                <Components.Subtitle />
-                <Components.Info />
-                <Components.Progress />
-              </Components.Container>
-            </>
-          )}
-        </PlaybackInfoContext.Provider>
-      </AudioInfoContext.Provider>
-    </BackendSongContext.Provider>
+    <AudioInfoContext.Provider value={audioState}>
+      <PlaybackInfoContext.Provider value={playbackInfo}>
+        {isSessionClosed ? (
+          <h1 style={{ color: 'black' }}>SESSION CLOSED - REFRESH SOURCE</h1>
+        ) : (
+          <>
+            <Components.Audio
+              onPlay={onPlay}
+              onEnded={onEnded}
+              onTimeUpdate={onTimeUpdate}
+            />
+            <Components.Container>
+              <Components.Title />
+              <Components.Subtitle />
+              <Components.Info />
+              <Components.Progress />
+            </Components.Container>
+          </>
+        )}
+      </PlaybackInfoContext.Provider>
+    </AudioInfoContext.Provider>
   )
 }
 

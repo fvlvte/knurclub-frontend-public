@@ -5,6 +5,7 @@ enum WSNetworkFrameType {
   SR_V1_CACHE_QUERY_BULK = 'sr.v1.cache.query.bulk',
   SR_V1_CACHE_QUERY_BULK_RESULT = 'sr.v1.cache.query.bulk.result',
   SR_V1_CACHE_STORE = 'sr.v1.cache.store',
+  SR_V1_CHANGE_CURRENT_SONG = 'sr.v1.change.current_song',
   SR_V1_CACHE_STORE_RESULT = 'sr.v1.cache.store.result',
   SR_V1_FETCH = 'sr.v1.fetch',
 }
@@ -55,9 +56,32 @@ type SR_V1_CACHE_QUERY_BULK_RESULT = {
   }[]
 }
 
+type SR_V1_CHANGE_CURRENT_SONG = {
+  type: WSNetworkFrameType.SR_V1_CHANGE_CURRENT_SONG
+  params: BackendSong
+}
+
 type SR_V1_CACHE_STORE_RESULT = {
   type: WSNetworkFrameType.SR_V1_CACHE_STORE_RESULT
   params: [sourceUrl: string, success: boolean]
+}
+
+export type BackendSong = {
+  title: string
+  subtitle: string
+
+  audioSourceURL?: string
+  iconSource?: string
+  startFrom?: number
+
+  user: {
+    id: string
+    name: string
+    reputation: number
+  }
+
+  duration: number
+  playing: boolean
 }
 
 export {
@@ -67,6 +91,7 @@ export {
   type CLIENT_HELLO,
   type SR_V1_CACHE_QUERY_BULK,
   type SR_V1_FETCH,
+  type SR_V1_CHANGE_CURRENT_SONG,
   type SR_V1_CACHE_QUERY_BULK_RESULT,
   type SR_V1_CACHE_STORE,
   type SR_V1_CACHE_STORE_RESULT,
