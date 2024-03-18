@@ -1,16 +1,44 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { PlaybackInfo } from '../types/Common.ts'
 import { AudioState } from '../components/Audio.tsx'
 import AudioInfoContext from '../context/AudioInfoContext.ts'
 import PlaybackInfoContext from '../context/PlaybackInfoContext.ts'
 import { Components } from '../'
+import { WebSocketSingleton } from '../managers/WebSocketSingleton.ts'
+import { WSNetworkFrameType } from '../types/WSShared.ts'
+import BackendSongContext from '../context/BackendSongContext.ts'
 
 const PlayerWrapper = () => {
   const [audioState, setAudioState] = useState<AudioState | null>(null)
   const [playbackInfo, setPlaybackInfo] = useState<PlaybackInfo | null>(null)
   const [, setIsPreparingToPlay] = useState(true)
-
+  const song = useContext(BackendSongContext)
   const [isSessionClosed] = useState(false)
+
+  useEffect(() => {
+    if (audioState) {
+      WebSocketSingleton.getInstance().sendFrameNoResponse({
+        type: WSNetworkFrameType.SR_V1_PLAYBACK_STATE,
+        params: {
+          playing: audioState.isPlaying,
+          playerState: {
+            duration: audioState.time.duration,
+            currentTime: audioState.time.current,
+          },
+          songId: song?.audioSourceURL,
+        },
+      })
+    } else {
+      WebSocketSingleton.getInstance().sendFrameNoResponse({
+        type: WSNetworkFrameType.SR_V1_PLAYBACK_STATE,
+        params: {
+          playing: false,
+          playerState: undefined,
+          songId: undefined,
+        },
+      })
+    }
+  }, [audioState])
 
   const onTimeUpdate = useCallback(
     (as: AudioState | null) => {
