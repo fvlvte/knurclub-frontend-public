@@ -9,6 +9,7 @@ export function useAudioSourceCache(url: string | null) {
       setCache(null)
       return
     }
+    setCache(null)
     songAudioCacheGetFetch(url).then((data) => {
       setCache(data ?? null)
     })
