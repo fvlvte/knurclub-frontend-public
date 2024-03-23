@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react'
 import BackendSongContext from '../context/BackendSongContext.ts'
 import PlaybackInfoContext from '../context/PlaybackInfoContext.ts'
 import { useAudioSourceCache } from '../hooks/useAudioSourceCache.ts'
+import PlaybackControlContext from '../context/PlaybackControlContext.ts'
 
 type AudioControllerProps = {
   onPlay?: (state: AudioState | null) => void
@@ -26,6 +27,7 @@ const Audio = ({ onPlay, onEnded, onTimeUpdate }: AudioControllerProps) => {
   const song = useContext(BackendSongContext)
   const playbackInfo = useContext(PlaybackInfoContext)
   const audioSource = useAudioSourceCache(song?.audioSourceURL ?? null)
+  const playbackControl = useContext(PlaybackControlContext)
 
   const handleError = (e: unknown) => {
     console.error(e)
@@ -68,6 +70,22 @@ const Audio = ({ onPlay, onEnded, onTimeUpdate }: AudioControllerProps) => {
       }
     }
   }
+
+  useEffect(() => {
+    if (playbackControl && ref.current) {
+      if (playbackControl.isPaused && !ref.current?.paused) {
+        ref.current.pause()
+      } else if (!playbackControl.isPaused && ref.current?.paused) {
+        ref.current.play().catch(console.error)
+      }
+
+      if (playbackControl.volume > 1) {
+        ref.current.volume = playbackControl.volume / 100
+      } else {
+        ref.current.volume = playbackControl.volume
+      }
+    }
+  }, [playbackControl, ref.current])
 
   useEffect(() => {
     if (ref.current) {

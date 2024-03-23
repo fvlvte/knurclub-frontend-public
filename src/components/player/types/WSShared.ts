@@ -2,6 +2,8 @@ enum WSNetworkFrameType {
   SERVER_HELLO = 'server.hello',
   CLIENT_HELLO = 'client.hello',
 
+  SR_V1_SKIP_CONTROL = 'sr.v1.skip.control',
+
   SR_V1_CACHE_QUERY_BULK = 'sr.v1.cache.query.bulk',
   SR_V1_CACHE_QUERY_BULK_RESULT = 'sr.v1.cache.query.bulk.result',
   SR_V1_CACHE_STORE = 'sr.v1.cache.store',
@@ -9,6 +11,8 @@ enum WSNetworkFrameType {
   SR_V1_CACHE_STORE_RESULT = 'sr.v1.cache.store.result',
   SR_V1_FETCH = 'sr.v1.fetch',
   SR_V1_PLAYBACK_STATE = 'sr.v1.playback.state',
+
+  SR_V1_PLAYBACK_CONTROL_UPDATE = 'sr.v1.playback.control.update',
 }
 
 type WSNetworkFrame = {
@@ -53,6 +57,24 @@ type SR_V1_CACHE_QUERY_BULK = {
 type SR_V1_FETCH = {
   type: WSNetworkFrameType.SR_V1_FETCH
   params: string[]
+}
+
+type PlaybackControl = {
+  isPaused: boolean
+  volume: number
+  pointsChange: number
+}
+
+type SR_V1_PLAYBACK_CONTROL_UPDATE = {
+  type: WSNetworkFrameType.SR_V1_PLAYBACK_CONTROL_UPDATE
+  params: PlaybackControl
+}
+
+type SR_V1_SKIP_CONTROL = {
+  type: WSNetworkFrameType.SR_V1_SKIP_CONTROL
+  params: {
+    url: string
+  }
 }
 
 type SR_V1_CACHE_STORE = {
@@ -102,7 +124,10 @@ export {
   type SERVER_HELLO,
   type CLIENT_HELLO,
   type PlaybackState,
+  type SR_V1_PLAYBACK_CONTROL_UPDATE,
   type SR_V1_PLAYBACK_STATE,
+  type SR_V1_SKIP_CONTROL,
+  type PlaybackControl,
   type SR_V1_CACHE_QUERY_BULK,
   type SR_V1_FETCH,
   type SR_V1_CHANGE_CURRENT_SONG,

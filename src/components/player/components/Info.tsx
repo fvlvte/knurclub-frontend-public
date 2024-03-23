@@ -1,10 +1,11 @@
 import BackendSongContext from '../context/BackendSongContext.ts'
 import React, { useContext } from 'react'
-//import PlaybackInfoContext from './context/PlaybackInfoContext.ts'
+import PlaybackControlContext from '../context/PlaybackControlContext.ts'
 
 function Info() {
   const song = useContext(BackendSongContext)
-  //const playbackInfo = useContext(PlaybackInfoContext)
+
+  const playbackControl = useContext(PlaybackControlContext)
 
   return (
     <div
@@ -68,8 +69,13 @@ function Info() {
           >
             {song?.user.name ?? ''}
           </p>
-          <PointsBalance balance={song?.user.reputation ?? 0} />
-          <PointsDelta delta={0} />
+          <PointsBalance
+            balance={
+              (song?.user.reputation ?? 0) +
+              (playbackControl?.pointsChange ?? 0)
+            }
+          />
+          <PointsDelta delta={playbackControl?.pointsChange ?? 0} />
         </div>
       </div>
     </div>
@@ -131,7 +137,7 @@ function PointsDelta({ delta }: PointsDeltaProps) {
 
   return (
     <p style={deltaStyles}>
-      {delta < 0 ? '-' : '+'}
+      {delta < 0 ? '' : '+'}
       {delta}
     </p>
   )

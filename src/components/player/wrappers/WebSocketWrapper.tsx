@@ -7,17 +7,21 @@ import { default as equal } from 'deep-equal'
 import {
   BackendSong,
   CLIENT_HELLO,
-  SERVER_HELLO,
+  PlaybackControl,
   SR_V1_CACHE_QUERY_BULK,
   SR_V1_CACHE_QUERY_BULK_RESULT,
   SR_V1_CACHE_STORE,
   SR_V1_CACHE_STORE_RESULT,
   SR_V1_CHANGE_CURRENT_SONG,
+  SR_V1_PLAYBACK_CONTROL_UPDATE,
+  SR_V1_SKIP_CONTROL,
   WSNetworkFrame,
   WSNetworkFrameType,
 } from '../types/WSShared.ts'
 import { songAudioCacheGet, songAudioCacheSet } from '../util/cacheUtils.ts'
 import BackendSongContext from '../context/BackendSongContext.ts'
+import PlaybackControlContext from '../context/PlaybackControlContext.ts'
+import deepEqual from 'deep-equal'
 
 type WebSocketWrapperProps = {
   token: string
@@ -26,6 +30,8 @@ type WebSocketWrapperProps = {
 
 export function WebSocketWrapper(props: WebSocketWrapperProps) {
   const [helloPacketExchanged, setHelloPacketExchanged] = useState(false)
+  const [playbackControl, setPlaybackControl] =
+    useState<PlaybackControl | null>(null)
   const [webSocketContext, setWebSocketContext] =
     useState<WebSocketContextType>({
       ws: null,
@@ -42,8 +48,6 @@ export function WebSocketWrapper(props: WebSocketWrapperProps) {
 
     switch (type) {
       case WSNetworkFrameType.SERVER_HELLO: {
-        const parsed = data as SERVER_HELLO
-        console.log('Server Hello', parsed.params)
         WebSocketSingleton.getInstance().sendFrameNoResponse({
           type: WSNetworkFrameType.CLIENT_HELLO,
           params: {
@@ -85,6 +89,21 @@ export function WebSocketWrapper(props: WebSocketWrapperProps) {
         } as SR_V1_CACHE_STORE_RESULT)
         break
       }
+      case WSNetworkFrameType.SR_V1_SKIP_CONTROL: {
+        const parsed = data as SR_V1_SKIP_CONTROL
+        const url = parsed.params.url
+        if (url === song?.audioSourceURL) {
+          setSong(null)
+        }
+        break
+      }
+      case WSNetworkFrameType.SR_V1_PLAYBACK_CONTROL_UPDATE: {
+        const parsed = data as SR_V1_PLAYBACK_CONTROL_UPDATE
+        if (!deepEqual(parsed.params, playbackControl)) {
+          setPlaybackControl(parsed.params)
+        }
+        break
+      }
       default:
         console.error(`Unhandled frame type ${type}`)
     }
@@ -96,7 +115,7 @@ export function WebSocketWrapper(props: WebSocketWrapperProps) {
 
       const newState = {
         ws: ws,
-        isConnected: ws?.readyState === ws?.OPEN ?? false,
+        isConnected: ws?.readyState === ws?.OPEN,
       }
 
       setWebSocketContext((prev) => (equal(prev, newState) ? prev : newState))
@@ -115,7 +134,7 @@ export function WebSocketWrapper(props: WebSocketWrapperProps) {
 
     const newState = {
       ws: ws ?? null,
-      isConnected: ws?.readyState === ws?.OPEN ?? false,
+      isConnected: ws?.readyState === ws?.OPEN,
     }
 
     setWebSocketContext((prev) => (equal(prev, newState) ? prev : newState))
@@ -130,10 +149,12 @@ export function WebSocketWrapper(props: WebSocketWrapperProps) {
   return (
     <WebSocketContext.Provider value={webSocketContext}>
       <BackendSongContext.Provider value={song}>
-        {webSocketContext.isConnected &&
-          webSocketContext.ws !== null &&
-          helloPacketExchanged &&
-          props.children}
+        <PlaybackControlContext.Provider value={playbackControl}>
+          {webSocketContext.isConnected &&
+            webSocketContext.ws !== null &&
+            helloPacketExchanged &&
+            props.children}
+        </PlaybackControlContext.Provider>
       </BackendSongContext.Provider>
     </WebSocketContext.Provider>
   )
