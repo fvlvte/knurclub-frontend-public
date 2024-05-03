@@ -1,13 +1,12 @@
 body,
 #root {
-  background: rgb(252, 231, 243);
+  background: var(--bg-primary);
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --nav-bg-color: brown;
   width: 100%;
   height: 100%;
   --card: '#fff';
@@ -35,4 +34,18 @@ h5,
 h6,
 p {
   margin: 0;
+}
+
+.light {
+  --bg-primary: #fce7f3;
+  --bg-secondary: #ffffff;
+
+  --text-primary: #500724;
+}
+
+.dark {
+  --bg-primary: #271019;
+  --bg-secondary: #16090e;
+
+  --text-primary: #ffffff;
 }

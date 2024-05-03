@@ -14,6 +14,7 @@ import {
   TwitchHelixScopeHelper,
 } from './util/TwitchHelixScopeHelper.ts'
 import { Settings } from './components/Settings.tsx'
+import { ColorThemeContextProvider } from './contexts/ColorThemeContext.tsx'
 
 const makeRedirectUrl = (clientId: string, redirectUrl: string) => {
   const scopes: Features[] = [Features.SONG_REQUEST, Features.SOUND_ALERTS]
@@ -71,19 +72,21 @@ export const App = () => {
   }, [path, token])
 
   return (
-    <RouterContext.Provider
-      value={{ navigate: doNavigation, currentPath: path, queryString }}
-    >
-      <AuthContext.Provider
-        value={{
-          consumeSession: doConsumeSession,
-          isLoggedIn: token !== null,
-          login: doLogin,
-          logout: doLogout,
-        }}
+    <ColorThemeContextProvider>
+      <RouterContext.Provider
+        value={{ navigate: doNavigation, currentPath: path, queryString }}
       >
-        {returnCurrentRoute()}
-      </AuthContext.Provider>
-    </RouterContext.Provider>
+        <AuthContext.Provider
+          value={{
+            consumeSession: doConsumeSession,
+            isLoggedIn: token !== null,
+            login: doLogin,
+            logout: doLogout,
+          }}
+        >
+          {returnCurrentRoute()}
+        </AuthContext.Provider>
+      </RouterContext.Provider>
+    </ColorThemeContextProvider>
   )
 }
