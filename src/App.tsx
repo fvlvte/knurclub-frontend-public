@@ -15,6 +15,7 @@ import {
 } from './util/TwitchHelixScopeHelper.ts'
 import { Settings } from './components/Settings.tsx'
 import { ColorThemeContextProvider } from './contexts/ColorThemeContext.tsx'
+import { Wulkanizator } from './components/Wulkanizator.tsx'
 
 const makeRedirectUrl = (clientId: string, redirectUrl: string) => {
   const scopes: Features[] = [Features.SONG_REQUEST, Features.SOUND_ALERTS]
@@ -57,6 +58,8 @@ export const App = () => {
         return <PolakWidget />
       case '/oauth-flow':
         return <OAuthHandler />
+      case '/wulkanizator':
+        return <Wulkanizator />
       case '/settings':
         return (
           <Home>
