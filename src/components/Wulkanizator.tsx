@@ -109,6 +109,7 @@ export const Wulkanizator = () => {
   const [pumpOn, setPumpOn] = useState<boolean>(false)
 
   const temperatureSetterRef = useRef<HTMLInputElement>(null)
+  const timeSetterRef = useRef<HTMLInputElement>(null)
 
   const onGATTDisconnect = useCallback(() => {
     setStatus('Disconnected')
@@ -345,6 +346,25 @@ export const Wulkanizator = () => {
           }}
         >
           USTAW TEMPERATURE
+        </button>
+      </div>
+      <div>
+        <input type={'number'} ref={timeSetterRef} />
+        <button
+          onClick={() => {
+            if (timeSetterRef.current) {
+              setTimeout(
+                () => {
+                  sendAction(Action.ACTION_PUMP_OFF, null)
+                  sendAction(Action.ACTION_HEAT_OFF, null)
+                },
+                parseInt(timeSetterRef.current.value) * 1000
+              )
+              sendAction(Action.ACTION_PUMP_ON, null)
+            }
+          }}
+        >
+          ODPAL POMPEf + TIMER DO WYŁĄCZENIA (w sek)
         </button>
       </div>
     </div>
