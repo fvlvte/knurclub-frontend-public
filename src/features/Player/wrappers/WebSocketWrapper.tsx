@@ -21,9 +21,9 @@ import {
 import { songAudioCacheGet, songAudioCacheSet } from '../util/cacheUtils.ts'
 import BackendSongContext from '../context/BackendSongContext.ts'
 import PlaybackControlContext from '../context/PlaybackControlContext.ts'
+import { useToken } from '../hooks/useToken.ts'
 
 type WebSocketWrapperProps = {
-  token: string
   children: React.ReactNode
 }
 
@@ -38,6 +38,8 @@ export function WebSocketWrapper(props: WebSocketWrapperProps) {
     })
 
   const [song, setSong] = useState<BackendSong | null>(null)
+
+  const token = useToken()
 
   const globalMessageHandler = async (message: MessageEvent) => {
     const { isReply, type } = JSON.parse(message.data) as WSNetworkFrame
@@ -121,7 +123,7 @@ export function WebSocketWrapper(props: WebSocketWrapperProps) {
     if (webSocketContext.ws === null) {
       const ws = WebSocketSingleton.getInstance().getWebSocket()
       if (!ws || ws.readyState !== ws.OPEN) {
-        WebSocketSingleton.getInstance().init(props.token)
+        WebSocketSingleton.getInstance().init(token)
       }
     }
 
