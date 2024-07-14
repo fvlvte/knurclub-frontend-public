@@ -18,15 +18,15 @@ export const TTSComponent: React.FC<TTSComponentProps> = (
   useEffect(() => {
     const audioElement = audioRef.current
     if (audioElement) {
-      Config.getBackendURL().then((url) => {
-        const text = encodeURIComponent(props.text)
+      const url = Config.getNewBackendURL()
 
-        audioElement.src = `${url}/v1/tts?data=${text}`
+      const text = encodeURIComponent(props.text)
 
-        audioElement.onended = callback
-        audioElement.onerror = console.log
-        audioElement.play().catch(console.log)
-      })
+      audioElement.src = `${url}/v1/tts?data=${text}`
+
+      audioElement.onended = callback
+      audioElement.onerror = console.log
+      audioElement.play().catch(console.log)
     }
   }, [props, callback])
 
