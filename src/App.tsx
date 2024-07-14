@@ -1,21 +1,22 @@
-import { OAuthHandler } from './components/OAuthHandler'
-import PolakWidget from './components/PolakWidget'
-import { Home } from './components/Home'
-import { useNavigation } from './hooks/useNavigation'
-import { PersistentStore } from './util/PersistentStore'
-import { HomeUser } from './components/HomeUser'
-import Player from './components/player/Player.tsx'
+import { OAuthHandler } from './features/UserPanel/OAuthHandler.tsx'
+import PolakWidget from './features/Widget/PolakWidget.tsx'
+import { Home } from './features/UserPanel/Home.tsx'
+import { useNavigation } from './hooks/useNavigation.tsx'
+import { PersistentStore } from './util/PersistentStore.ts'
+import { HomeUser } from './features/UserPanel/HomeUser.tsx'
+import Player from './features/Player/Player.tsx'
 import { AuthContext } from './contexts/AuthContext.ts'
 import { RouterContext } from './contexts/RouterContext.ts'
 import { useCallback, useEffect, useState } from 'react'
-import { Config } from './Config.ts'
+import { Config } from './util/Config.ts'
 import {
   Features,
   TwitchHelixScopeHelper,
 } from './util/TwitchHelixScopeHelper.ts'
-import { Settings } from './components/Settings.tsx'
+import { Settings } from './features/UserPanel/Settings.tsx'
 import { ColorThemeContextProvider } from './contexts/ColorThemeContext.tsx'
-import { Wulkanizator } from './components/Wulkanizator.tsx'
+import { Wulkanizator } from './features/Wulkanizator/Wulkanizator.tsx'
+import TournamentView from './features/Widget/TournamentView.tsx'
 
 const makeRedirectUrl = (clientId: string, redirectUrl: string) => {
   const scopes: Features[] = [Features.ALL]
@@ -60,13 +61,15 @@ export const App = () => {
         return <OAuthHandler />
       case '/wulkanizator':
         return <Wulkanizator />
+      case '/knurniej':
+        return <TournamentView />
       case '/settings':
         return (
           <Home>
             <Settings />
           </Home>
         )
-      case '/new/player':
+      case '/new/Player':
       case '/sr/widget':
         return <Player />
       default:
