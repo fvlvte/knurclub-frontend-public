@@ -69,7 +69,7 @@ export const App = () => {
             <Settings />
           </Home>
         )
-      case '/new/Player':
+      case '/new/player':
       case '/sr/widget':
         return <Player />
       default:
