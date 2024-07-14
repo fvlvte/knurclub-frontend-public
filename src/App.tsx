@@ -18,7 +18,7 @@ import { ColorThemeContextProvider } from './contexts/ColorThemeContext.tsx'
 import { Wulkanizator } from './components/Wulkanizator.tsx'
 
 const makeRedirectUrl = (clientId: string, redirectUrl: string) => {
-  const scopes: Features[] = [Features.SONG_REQUEST, Features.SOUND_ALERTS]
+  const scopes: Features[] = [Features.ALL]
   return `https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUrl}&scope=${TwitchHelixScopeHelper.getHelixScopesForFeature(
     scopes
   ).join('+')}`
