@@ -3,7 +3,7 @@ import { NavBar } from './NavBar'
 import './Home.css'
 import Footer from './Footer'
 import { Logo } from './Logo'
-import { ReactNode, useContext } from 'react'
+import { ReactNode, useContext, useEffect } from 'react'
 import { AuthContext } from '../contexts/AuthContext.ts'
 
 type HomeProps = {
@@ -13,6 +13,11 @@ export const Home = ({ children }: HomeProps) => {
   const authContext = useContext(AuthContext)
 
   const login = authContext?.login ?? (() => {})
+
+  // TODO: napraw to kiedś bo to troche paentologia
+  useEffect(() => {
+    document.body.style.background = 'var(--bg-primary)'
+  }, [])
 
   return (
     <div style={{ width: '100%', height: '100%' }}>
@@ -35,7 +40,6 @@ export const Home = ({ children }: HomeProps) => {
             <button
               className={'LoginButton'}
               onClick={() => {
-                console.log('spuha2')
                 login()
               }}
             >
